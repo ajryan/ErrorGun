@@ -14,6 +14,8 @@ namespace ErrorGun.Tests
     [TestClass]
     public class AppServiceTests
     {
+        public TestContext TestContext { get; set; }
+
         private static EmbeddableDocumentStore _DocumentStore;
         private static Mock<IEmailService> _MockEmailService;
 
@@ -128,6 +130,10 @@ namespace ErrorGun.Tests
                 Assert.AreNotEqual(default(DateTime), loadedApp.CreatedTimestampUtc);
 
                 loadedEmails = session.Load<ContactEmail>(loadedApp.ContactEmailIds);
+                foreach (var email in loadedEmails)
+                {
+                    TestContext.WriteLine("Loaded email with confirm code " + email.ConfirmationCode);
+                }
 
                 Assert.AreEqual(2, loadedEmails.Length);
                 Assert.IsTrue(loadedEmails.Any(ce => ce.EmailAddress == "ok@good.com"));
@@ -142,6 +148,8 @@ namespace ErrorGun.Tests
             // Confirm the contact emails: should not be already confirmed
             foreach (var email in loadedEmails)
             {
+                TestContext.WriteLine("Confirming email with code " + email.ConfirmationCode);
+
                 var confirmModel = appService.ConfirmEmail(email.ConfirmationCode);
                 Assert.IsTrue(confirmModel.Confirmed);
                 Assert.IsFalse(confirmModel.AlreadyConfirmed);
