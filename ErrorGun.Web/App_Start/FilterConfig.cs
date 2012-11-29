@@ -1,13 +1,13 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace ErrorGun.Web
 {
-    public class FilterConfig
+    public static class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            // Our custom error handling is taking care of this
+            //filters.Add(new HandleErrorAttribute());
         }
     }
 }

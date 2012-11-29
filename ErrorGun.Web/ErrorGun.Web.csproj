@@ -173,6 +173,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.5.2\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
@@ -180,6 +183,7 @@
     </Compile>
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\FailController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,6 +213,8 @@
     <Content Include="Global.asax" />
     <Content Include="Views\App\Complete.cshtml" />
     <Content Include="Views\App\ConfirmEmail.cshtml" />
+    <Content Include="Views\Fail\NotFound.cshtml" />
+    <Content Include="Views\Fail\ServerError.cshtml" />
     <TypeScriptCompile Include="Scripts\AppCreate.ts" />
     <Content Include="Scripts\AppCreate.js">
       <DependentUpon>AppCreate.ts</DependentUpon>

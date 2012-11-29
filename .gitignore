@@ -1,6 +1,7 @@
 *[Bb]in/
 *[Oo]bj/
 *[Dd]ebug/
+Data/
 *TestResults/
 packages/
 *_ReSharper*
