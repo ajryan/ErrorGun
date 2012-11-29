@@ -115,6 +115,7 @@ namespace ErrorGun.Tests
             string savedAppId = savedApp.Id;
 
             // Verify app and contact emails are saved
+            ContactEmail[] loadedEmails;
             using (IDocumentSession session = _DocumentStore.OpenSession())
             {
                 App loadedApp = session
@@ -126,7 +127,7 @@ namespace ErrorGun.Tests
                 Assert.IsNotNull(loadedApp.ApiKey);
                 Assert.AreNotEqual(default(DateTime), loadedApp.CreatedTimestampUtc);
 
-                var loadedEmails = session.Load<ContactEmail>(loadedApp.ContactEmailIds);
+                loadedEmails = session.Load<ContactEmail>(loadedApp.ContactEmailIds);
 
                 Assert.AreEqual(2, loadedEmails.Length);
                 Assert.IsTrue(loadedEmails.Any(ce => ce.EmailAddress == "ok@good.com"));
@@ -136,22 +137,22 @@ namespace ErrorGun.Tests
 
                 // Verify confirmation emails were sent
                 _MockEmailService.Verify(s => s.SendConfirmationEmails(It.IsAny<IEnumerable<ContactEmail>>()));
+            }
 
-                // Confirm the contact emails: should not be already confirmed
-                foreach (var email in loadedEmails)
-                {
-                    var confirmModel = appService.ConfirmEmail(email.ConfirmationCode);
-                    Assert.IsTrue(confirmModel.Confirmed);
-                    Assert.IsFalse(confirmModel.AlreadyConfirmed);
-                }
+            // Confirm the contact emails: should not be already confirmed
+            foreach (var email in loadedEmails)
+            {
+                var confirmModel = appService.ConfirmEmail(email.ConfirmationCode);
+                Assert.IsTrue(confirmModel.Confirmed);
+                Assert.IsFalse(confirmModel.AlreadyConfirmed);
+            }
 
-                // Re-confirm the contact emails: should be already confirmed
-                foreach (var email in loadedEmails)
-                {
-                    var confirmModel = appService.ConfirmEmail(email.ConfirmationCode);
-                    Assert.IsTrue(confirmModel.Confirmed);
-                    Assert.IsTrue(confirmModel.AlreadyConfirmed);
-                }
+            // Re-confirm the contact emails: should be already confirmed
+            foreach (var email in loadedEmails)
+            {
+                var confirmModel = appService.ConfirmEmail(email.ConfirmationCode);
+                Assert.IsTrue(confirmModel.Confirmed);
+                Assert.IsTrue(confirmModel.AlreadyConfirmed);
             }
         }
     }
