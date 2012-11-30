@@ -9,23 +9,16 @@ using Raven.Client.Embedded;
 namespace ErrorGun.Tests
 {
     [TestClass]
-    public class ErrorServiceTests
+    public class ErrorServiceTests : RavenDbTestBase
     {
-        private static EmbeddableDocumentStore _DocumentStore;
         private static Mock<IEmailService> _MockEmailService;
 
         private static string _TestAppId;
 
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
+        public ErrorServiceTests()
         {
-            _DocumentStore = new EmbeddableDocumentStore
-            {
-                RunInMemory = true
-            };
-            _DocumentStore.Initialize();
-
-            using (var session = _DocumentStore.OpenSession())
+            // seed test app and contact
+            using (var session = DocumentStore.OpenSession())
             {
                 var contactEmail = new ContactEmail { EmailAddress = "a@b.com", Confirmed = true };
                 session.Store(contactEmail);
@@ -51,7 +44,7 @@ namespace ErrorGun.Tests
             var testError = new ErrorReport();
             try
             {
-                new ErrorService(_DocumentStore, _MockEmailService.Object).ReportError(testError);
+                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError);
             }
             catch (ServiceValidationException serviceEx)
             {
@@ -73,7 +66,7 @@ namespace ErrorGun.Tests
             };
             try
             {
-                new ErrorService(_DocumentStore, _MockEmailService.Object).ReportError(testError);
+                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError);
             }
             catch (ServiceValidationException serviceEx)
             {
@@ -92,7 +85,7 @@ namespace ErrorGun.Tests
             };
             try
             {
-                new ErrorService(_DocumentStore, _MockEmailService.Object).ReportError(testError);
+                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError);
             }
             catch (ServiceValidationException serviceEx)
             {
@@ -114,7 +107,7 @@ namespace ErrorGun.Tests
                 UserEmail = "user@email.com"
             };
 
-            var service = new ErrorService(_DocumentStore, _MockEmailService.Object);
+            var service = new ErrorService(DocumentStore, _MockEmailService.Object);
             var reportedError = service.ReportError(error);
 
             Assert.IsFalse(String.IsNullOrEmpty(reportedError.Id));

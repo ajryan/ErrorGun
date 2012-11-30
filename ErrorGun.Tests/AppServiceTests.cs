@@ -102,7 +102,7 @@ namespace ErrorGun.Tests
             string savedAppId = savedApp.Id;
 
             // Verify app and contact emails are saved
-            List<string> emailConfirmCodes = null;
+            List<string> emailConfirmCodes;
 
             using (var session = DocumentStore.OpenSession())
             {
