@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Configuration;
 using System.Web.Mvc;
+using ErrorGun.Web.Filters;
 using ErrorGun.Web.Models;
 
 namespace ErrorGun.Web.Controllers
 {
-    [RequireHttps]
+    [ForwardAwareRequireHttps]
     public class AdminController : Controller
     {
         private static readonly string _AdminPassword = ConfigurationManager.AppSettings["AdminPassword"];
