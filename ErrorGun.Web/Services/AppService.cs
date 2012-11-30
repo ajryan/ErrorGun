@@ -67,7 +67,8 @@ namespace ErrorGun.Web.Services
             {
                 var contactEmail = session
                     .Query<ContactEmail>()
-                    .SingleOrDefault(ce => ce.ConfirmationCode == confirmationCode);
+                    .Where(ce => ce.ConfirmationCode == confirmationCode)
+                    .SingleOrDefault();
 
                 if (contactEmail == null)
                     throw new ServiceValidationException(ErrorCode.ConfirmEmail_EmailDoesNotExist);

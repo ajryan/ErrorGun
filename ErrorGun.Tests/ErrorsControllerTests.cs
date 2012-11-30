@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
@@ -18,7 +17,7 @@ namespace ErrorGun.Tests
     public class ErrorsControllerTests
     {
         [TestMethod]
-        public async Task ErrorsController_Post_Roundtrip()
+        public void ErrorsController_Post_Roundtrip()
         {
             var error = new ErrorReport
             {
@@ -41,7 +40,9 @@ namespace ErrorGun.Tests
             SetupTestableApiController(controller);
 
             var response = controller.Post(error);
-            var responseError = await response.Content.ReadAsAsync<ErrorReport>();
+            var responseErrorTask = response.Content.ReadAsAsync<ErrorReport>();
+            responseErrorTask.Wait();
+            var responseError = responseErrorTask.Result;
 
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             Assert.AreEqual("apps/1", responseError.AppId);

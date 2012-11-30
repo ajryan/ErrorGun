@@ -141,6 +141,7 @@
     <Compile Include="ErrorsControllerTests.cs" />
     <Compile Include="ErrorServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RavenDbTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ErrorGun.Common\ErrorGun.Common.csproj">

@@ -6,30 +6,15 @@ using ErrorGun.Web.Models;
 using ErrorGun.Web.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Raven.Client;
-using Raven.Client.Embedded;
 
 namespace ErrorGun.Tests
 {
     [TestClass]
-    public class AppServiceTests
+    public class AppServiceTests : RavenDbTestBase
     {
         public TestContext TestContext { get; set; }
 
-        private static EmbeddableDocumentStore _DocumentStore;
-        private static Mock<IEmailService> _MockEmailService;
-
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
-        {
-            _DocumentStore = new EmbeddableDocumentStore
-            {
-                RunInMemory = true
-            };
-            _DocumentStore.Initialize();
-
-            _MockEmailService = new Mock<IEmailService>();
-        }
+        private static readonly Mock<IEmailService> _MockEmailService = new Mock<IEmailService>();
 
         [TestMethod, ExpectedException(typeof(ServiceValidationException))]
         public void AppService_EmptyModelValidation()
@@ -38,7 +23,7 @@ namespace ErrorGun.Tests
 
             try
             {
-                var service = new AppService(_DocumentStore, _MockEmailService.Object);
+                var service = new AppService(DocumentStore, _MockEmailService.Object);
                 service.CreateApp(badApp);
             }
             catch (ServiceValidationException serviceEx)
@@ -60,7 +45,7 @@ namespace ErrorGun.Tests
 
             try
             {
-                var service = new AppService(_DocumentStore, _MockEmailService.Object);
+                var service = new AppService(DocumentStore, _MockEmailService.Object);
                 service.CreateApp(badApp);
             }
             catch (ServiceValidationException serviceEx)
@@ -81,7 +66,7 @@ namespace ErrorGun.Tests
 
             try
             {
-                var service = new AppService(_DocumentStore, _MockEmailService.Object);
+                var service = new AppService(DocumentStore, _MockEmailService.Object);
                 service.CreateApp(badApp);
             }
             catch (ServiceValidationException serviceEx)
@@ -96,7 +81,7 @@ namespace ErrorGun.Tests
         {
             try
             {
-                var service = new AppService(_DocumentStore, _MockEmailService.Object);
+                var service = new AppService(DocumentStore, _MockEmailService.Object);
                 service.ConfirmEmail("invalid_confirmation_code");
             }
             catch (ServiceValidationException serviceEx)
@@ -107,9 +92,9 @@ namespace ErrorGun.Tests
         }
 
         [TestMethod]
-        public void AppService_CompleteRoundTripWithConfirmation()
+        public void AppService_ZZCompleteRoundTripWithConfirmation()
         {
-            var appService = new AppService(_DocumentStore, _MockEmailService.Object);
+            var appService = new AppService(DocumentStore, _MockEmailService.Object);
 
             // Save via service
             var validApp = new AppModel { Name = "MyApp", ContactEmails = "ok@good.com, alsoOk@email.com" };
@@ -118,7 +103,8 @@ namespace ErrorGun.Tests
 
             // Verify app and contact emails are saved
             List<string> emailConfirmCodes = null;
-            using (IDocumentSession session = _DocumentStore.OpenSession())
+
+            using (var session = DocumentStore.OpenSession())
             {
                 App loadedApp = session
                     .Include<App>(a => a.ContactEmailIds)
