@@ -1,0 +1,21 @@
+﻿@model ErrorGun.Web.Models.AdminModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ErrorGun Admin</title>
+    </head>
+    <body>
+        <ul>
+              @foreach (var property in Model.GetType().GetProperties())
+              {
+                  <li>
+                      <span>@property.Name: </span>
+                      <span>@property.GetValue(Model)</span>
+                  </li>
+              }
+        </ul>
+    </body>
+</html>

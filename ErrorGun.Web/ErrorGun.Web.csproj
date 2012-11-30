@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44301</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -181,10 +181,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\FailController.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Raven\DocumentStoreExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -223,6 +225,7 @@
     <Content Include="Views\App\ConfirmEmail.cshtml" />
     <Content Include="Views\Fail\NotFound.cshtml" />
     <Content Include="Views\Fail\ServerError.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <TypeScriptCompile Include="Scripts\AppCreate.ts" />
     <Content Include="Scripts\AppCreate.js">
       <DependentUpon>AppCreate.ts</DependentUpon>

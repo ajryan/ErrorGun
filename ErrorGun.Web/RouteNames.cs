@@ -6,5 +6,6 @@ namespace ErrorGun.Web
     {
         public const string Default = "Default";
         public const string DefaultApi = "DefaultApi";
+        public const string DefaultAdmin = "DefaultAdmin";
     }
 }
