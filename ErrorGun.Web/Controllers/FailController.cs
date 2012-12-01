@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ErrorGun.Web.Controllers
@@ -18,9 +15,6 @@ namespace ErrorGun.Web.Controllers
         public ActionResult ServerError()
         {
             Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-
-            var exception = Server.GetLastError(); // TODO: will this get logged already by apphb?
-
             return View();
         }
 
