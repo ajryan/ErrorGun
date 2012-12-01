@@ -32,7 +32,7 @@ namespace ErrorGun.Web
             else
             {
                 // TODO: may already be caught
-                //NewRelic.Api.Agent.NewRelic.NoticeError(filterContext.Exception);
+                NewRelic.Api.Agent.NewRelic.NoticeError(filterContext.Exception);
             }
         }
     }
