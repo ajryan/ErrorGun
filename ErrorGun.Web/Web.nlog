@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <variable name="verbose" value="${longdate} | ${processid} | ${processname} | ${level:uppercase=true} | ${logger} | ${message} ${exception:format=ToString,StackTrace}" />
+  <targets>
+    <target name="logfile" 
+            xsi:type="File" 
+            fileName="${basedir}/Logs/Log.txt" 
+            layout="${verbose}"
+            archiveFileName="${basedir}/Logs/Log.{#}.txt"
+            archiveEvery="Day"
+            archiveNumbering="Rolling"
+            maxArchiveFiles="7"
+            concurrentWrites="true" />
+    <target name="debugger" xsi:type="Debugger" />
+  </targets>
+  <rules>
+	  <logger name="*" minLevel="Info" writeTo="debugger" />
+	  <logger name="*" minLevel="Info" writeTo="logfile" />
+  </rules>
+</nlog>

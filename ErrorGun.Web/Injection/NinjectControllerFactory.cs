@@ -16,8 +16,16 @@ namespace ErrorGun.Web.Injection
                 controller = (IController) ErrorGunWebServicesModule.GlobalKernel.Get(controllerType);
 
             if (controller == null)
-                throw new HttpException((int) HttpStatusCode.NotFound, String.Format("A controller for type {0} was not found.", controllerType));
-            
+            {
+                string controllerTypeName = controllerType == null
+                    ? "<null controller type>"
+                    : controllerType.ToString();
+
+                throw new HttpException(
+                    (int) HttpStatusCode.NotFound,
+                    String.Format("A controller for type {0} was not found.", controllerTypeName));
+            }
+
             return controller;
         }
     }
