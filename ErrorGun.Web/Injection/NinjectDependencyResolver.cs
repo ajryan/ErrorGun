@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Web.Http.Dependencies;
+using Ninject;
 
 namespace ErrorGun.Web.Injection
 {
     public class NinjectDependencyResolver : NinjectDependencyScope, IDependencyResolver
     {
-        public NinjectDependencyResolver() : 
-            base(ErrorGunWebServicesModule.GlobalKernel)
+        public NinjectDependencyResolver(IKernel kernel) : 
+            base(kernel)
         {
         }
 
         public IDependencyScope BeginScope()
         {
-            return new NinjectDependencyScope(ErrorGunWebServicesModule.GlobalKernel);//.BeginBlock());
+            return new NinjectDependencyScope(ResolutionRoot);
         }
     }
 }

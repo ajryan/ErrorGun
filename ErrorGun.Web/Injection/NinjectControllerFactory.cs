@@ -9,11 +9,18 @@ namespace ErrorGun.Web.Injection
 {
     public class NinjectControllerFactory : DefaultControllerFactory
     {
+        private readonly IKernel _kernel;
+
+        public NinjectControllerFactory(IKernel kernel)
+        {
+            _kernel = kernel;
+        }
+
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
             IController controller = null;
             if (controllerType != null)
-                controller = (IController) ErrorGunWebServicesModule.GlobalKernel.Get(controllerType);
+                controller = (IController) _kernel.Get(controllerType);
 
             if (controller == null)
             {

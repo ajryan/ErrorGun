@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Web.Http;
 using ErrorGun.Web.Injection;
+using Ninject;
 
 namespace ErrorGun.Web
 {
     public static class WebApiConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static void Register(HttpConfiguration config, IKernel kernel)
         {
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.LocalOnly;
 
@@ -16,7 +17,7 @@ namespace ErrorGun.Web
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.DependencyResolver = new NinjectDependencyResolver();
+            config.DependencyResolver = new NinjectDependencyResolver(kernel);
         }
     }
 }

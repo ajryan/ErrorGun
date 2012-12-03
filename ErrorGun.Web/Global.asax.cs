@@ -9,6 +9,7 @@ using ErrorGun.Web.Controllers;
 using ErrorGun.Web.Injection;
 using ErrorGun.Web.Services;
 using NLog;
+using Ninject;
 
 namespace ErrorGun.Web
 {
@@ -34,13 +35,13 @@ namespace ErrorGun.Web
             }
 
             AreaRegistration.RegisterAllAreas();
-
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            var ninjectControllerFactory = new NinjectControllerFactory();
-            ControllerBuilder.Current.SetControllerFactory(ninjectControllerFactory);
+            var kernel = new StandardKernel(new ErrorGunWebServicesModule());
+
+            WebApiConfig.Register(GlobalConfiguration.Configuration, kernel);
+            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(kernel));
         }
 
         private static readonly Dictionary<int,string> _StatusFailActionMap = new Dictionary<int, string>

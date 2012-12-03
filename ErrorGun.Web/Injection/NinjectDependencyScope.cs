@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http.Dependencies;
+using Ninject;
 using Ninject.Parameters;
 using Ninject.Syntax;
 
@@ -18,12 +19,15 @@ namespace ErrorGun.Web.Injection
 
         public void Dispose()
         {
-            //var disposable = ResolutionRoot as IDisposable;
-            //if (disposable != null)
-            //{
-            //    disposable.Dispose();
-            //}
-            //ResolutionRoot = null;
+            if (ResolutionRoot is IKernel)
+                return;
+
+            var disposable = ResolutionRoot as IDisposable;
+            if (disposable != null)
+            {
+                disposable.Dispose();
+            }
+            ResolutionRoot = null;
         }
 
         public object GetService(Type serviceType)
