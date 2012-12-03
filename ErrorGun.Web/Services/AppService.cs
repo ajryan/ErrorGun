@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ErrorGun.Common;
+using ErrorGun.Web.Extensions;
 using ErrorGun.Web.Models;
 using Raven.Client;
 
@@ -24,7 +25,7 @@ namespace ErrorGun.Web.Services
 
             using (var session = _documentStore.OpenSession())
             {
-                var contactEmails = SplitEmails(appModel.ContactEmails)
+                var contactEmails = SplitAndTrimEmails(appModel.ContactEmails)
                     .Select(
                         address => new ContactEmail
                         {
@@ -103,19 +104,23 @@ namespace ErrorGun.Web.Services
             }
             else
             {
-                var emails = SplitEmails(appModel.ContactEmails);
+                var emails = SplitAndTrimEmails(appModel.ContactEmails);
+                
                 if (emails.Any(email => !EmailValidator.Validate(email)))
                     errorCodes.Add(ErrorCode.App_InvalidEmailFormat);
+
+                if (emails.HasDuplicate())
+                    errorCodes.Add(ErrorCode.App_DuplicateContactEmails);
             }
 
             if (errorCodes.Count > 0)
                 throw new ServiceValidationException(errorCodes);
         }
 
-        private static IEnumerable<string> SplitEmails(string emails)
+        private static string[] SplitAndTrimEmails(string emails)
         {
             var tokens = emails.Split(',');
-            return tokens.Select(t => t.Trim());
+            return tokens.Select(t => t.Trim()).ToArray();
         }
     }
 }

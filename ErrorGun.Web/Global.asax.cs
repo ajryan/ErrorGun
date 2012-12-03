@@ -35,12 +35,13 @@ namespace ErrorGun.Web
             }
 
             AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-
+            
             var kernel = new StandardKernel(new ErrorGunWebServicesModule());
 
             WebApiConfig.Register(GlobalConfiguration.Configuration, kernel);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(kernel));
         }
 

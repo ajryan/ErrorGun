@@ -8,13 +8,15 @@ namespace ErrorGun.Common
         App_MissingName,
         App_MissingContactEmail,
         App_InvalidEmailFormat,
+        App_DuplicateContactEmails,
 
         ErrorReport_MissingAppId,
         ErrorReport_AppDoesNotExist,
         ErrorReport_MissingMessage,
         ErrorReport_InvalidUserEmail,
 
-        ConfirmEmail_EmailDoesNotExist
+        ConfirmEmail_EmailDoesNotExist,
+        
     }
     // ReSharper restore InconsistentNaming
 }

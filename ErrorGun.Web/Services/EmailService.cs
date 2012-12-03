@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Net;
 using System.Net.Mail;
 using ErrorGun.Common;
+using ErrorGun.Web.Extensions;
 
 namespace ErrorGun.Web.Services
 {
@@ -46,12 +47,12 @@ namespace ErrorGun.Web.Services
             string body = String.Format(
                 "Id: {0}, Category: {1}, Source: {2}, Reported At: {3} UTC, User Email: {4}\r\nMessage: {5}\r\nDetail: {6}",
                 errorReport.Id,
-                errorReport.Category,
-                errorReport.Source,
+                errorReport.Category.PlaceholderOrTrim(),
+                errorReport.Source.PlaceholderOrTrim(),
                 errorReport.ReportedTimestampUtc,
-                errorReport.UserEmail,
-                errorReport.Message,
-                errorReport.Detail);
+                errorReport.UserEmail.PlaceholderOrTrim(),
+                errorReport.Message.PlaceholderOrTrim(),
+                errorReport.Detail.PlaceholderOrTrim());
 
             foreach (var emailAddress in emailAddresses)
             {

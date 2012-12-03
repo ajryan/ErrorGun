@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using ErrorGun.Web.Raven;
 using ErrorGun.Web.Services;
 using Ninject.Modules;
 using Raven.Client;
@@ -17,10 +18,10 @@ namespace ErrorGun.Web.Injection
             string connectionString = ConfigurationManager.ConnectionStrings["RavenDB"].ConnectionString;
             
             _documentStore = connectionString.Contains("DataDir")
-                ? new EmbeddableDocumentStore { ConnectionStringName = "RavenDB" }
+                ? new EmbeddableDocumentStore { ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true }
                 : new DocumentStore { ConnectionStringName = "RavenDB" };
 
-            _documentStore.Initialize();
+            _documentStore.InitializeWithDefaults();
         }
 
         public override void Load()

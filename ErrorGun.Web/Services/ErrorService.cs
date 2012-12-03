@@ -37,12 +37,12 @@ namespace ErrorGun.Web.Services
                 var errorReportToStore = new ErrorReport
                 {
                     AppId = errorReport.AppId,
-                    Category = PlaceHolderOrTrim(errorReport.Category),
-                    Detail = PlaceHolderOrTrim(errorReport.Detail),
-                    Message = PlaceHolderOrTrim(errorReport.Message),
-                    Source = PlaceHolderOrTrim(errorReport.Source),
+                    Category = errorReport.Category,
+                    Detail = errorReport.Detail,
+                    Message = errorReport.Message,
+                    Source = errorReport.Source,
                     ReportedTimestampUtc = GetReportedTimestampUtc(errorReport.ReportedTimestampUtc),
-                    UserEmail = PlaceHolderOrTrim(errorReport.UserEmail)
+                    UserEmail = errorReport.UserEmail
                 };
                 session.Store(errorReportToStore);
                 session.SaveChanges();
@@ -84,14 +84,6 @@ namespace ErrorGun.Web.Services
 
             if (errorCodes.Count > 0)
                 throw new ServiceValidationException(errorCodes);
-        }
-
-        private static string PlaceHolderOrTrim(string value)
-        {
-            return 
-                String.IsNullOrWhiteSpace(value) 
-                    ? "<empty>" 
-                    : value.Trim();
         }
 
         private static DateTime GetReportedTimestampUtc(DateTime reportedTimestampUtc)

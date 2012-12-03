@@ -10,14 +10,6 @@ namespace ErrorGun.Web.Services
     {
         private const string EXCEPTION_LOGGED = "LOGGINGSERVICE_EXCEPTION_LOGGED";
 
-        private static readonly bool _DebugEnvironment;
-        
-        static LoggingService()
-        {
-            string environment = ConfigurationManager.AppSettings["Environment"];
-            _DebugEnvironment = String.Equals(environment, "Debug", StringComparison.OrdinalIgnoreCase);
-        }
-
         public static void LogException(string message, Exception exception)
         {
             if (HttpContext.Current.Items.Contains(EXCEPTION_LOGGED))
@@ -25,7 +17,7 @@ namespace ErrorGun.Web.Services
             HttpContext.Current.Items[EXCEPTION_LOGGED] = true;
 
             // write to NLog in Debug environment only
-            if (_DebugEnvironment)
+            if (MvcApplication.DebugEnvironment)
             {
                 string controller = GetRouteValue("controller");
                 string action = GetRouteValue("action");

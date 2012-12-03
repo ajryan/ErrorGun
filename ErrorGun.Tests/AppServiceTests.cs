@@ -56,6 +56,27 @@ namespace ErrorGun.Tests
         }
 
         [TestMethod, ExpectedException(typeof(ServiceValidationException))]
+        public void AppService_DuplicateEmailValidation()
+        {
+            var badApp = new AppModel
+            {
+                Name = "MyApp",
+                ContactEmails = "a@a.com, a@a.com"
+            };
+
+            try
+            {
+                var service = new AppService(DocumentStore, _MockEmailService.Object);
+                service.CreateApp(badApp);
+            }
+            catch (ServiceValidationException serviceEx)
+            {
+                Assert.IsTrue(serviceEx.ErrorCodes.Contains(ErrorCode.App_DuplicateContactEmails));
+                throw;
+            }
+        }
+
+        [TestMethod, ExpectedException(typeof(ServiceValidationException))]
         public void AppService_OneGoodOneBadEmailValidation()
         {
             var badApp = new AppModel
