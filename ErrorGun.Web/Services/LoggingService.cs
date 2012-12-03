@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Web;
 using ErrorGun.Web.Extensions;
 using NLog;
@@ -16,23 +15,35 @@ namespace ErrorGun.Web.Services
                 return;
             HttpContext.Current.Items[EXCEPTION_LOGGED] = true;
 
-            // write to NLog in Debug environment only
-            if (MvcApplication.DebugEnvironment)
-            {
-                string controller = GetRouteValue("controller");
-                string action = GetRouteValue("action");
+            WriteNLog(logger => logger.ErrorException(message, exception));
 
-                string logger = (controller.HasValue() && action.HasValue())
-                    ? controller + "." + action
-                    : "Generic Error";
-
-                LogManager.GetLogger(logger).ErrorException(message, exception);
-            }
-            // non-debug Environment goes to NewRelic
-            else
+            // write to NewRelic in non-Debug environment only
+            if (!MvcApplication.DebugEnvironment)
             {
                 NewRelic.Api.Agent.NewRelic.NoticeError(exception);
             }
+        }
+
+        public static void LogInfo(string message)
+        {
+            WriteNLog(logger => logger.Info(message));
+        }
+
+        private static void WriteNLog(Action<Logger> logAction)
+        {
+            // write to NLog in Debug environment only
+            if (!MvcApplication.DebugEnvironment)
+                return;
+
+            string controller = GetRouteValue("controller");
+            string action = GetRouteValue("action");
+
+            string loggerName = (controller.HasValue() && action.HasValue())
+                                    ? controller + "." + action
+                                    : "Generic Logger";
+
+            var logger = LogManager.GetLogger(loggerName);
+            logAction(logger);
         }
 
         private static string GetRouteValue(string key)

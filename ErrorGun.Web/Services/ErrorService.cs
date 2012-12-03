@@ -58,6 +58,10 @@ namespace ErrorGun.Web.Services
                 {
                     _emailService.SendErrorReports(app, errorReport, emailsToContact);
                 }
+                else
+                {
+                    LoggingService.LogInfo("No emails to contact for " + app.Id);
+                }
 
                 return errorReportToStore;
             }
