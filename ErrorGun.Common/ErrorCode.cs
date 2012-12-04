@@ -12,11 +12,11 @@ namespace ErrorGun.Common
 
         ErrorReport_MissingAppId,
         ErrorReport_AppDoesNotExist,
+        ErrorReport_InvalidApiKey,
         ErrorReport_MissingMessage,
         ErrorReport_InvalidUserEmail,
 
-        ConfirmEmail_EmailDoesNotExist,
-        
+        ConfirmEmail_EmailDoesNotExist
     }
     // ReSharper restore InconsistentNaming
 }

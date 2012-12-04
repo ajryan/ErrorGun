@@ -19,7 +19,7 @@ namespace ErrorGun.Tests
         [TestMethod]
         public void ErrorsController_Post_Roundtrip()
         {
-            var error = new ErrorReport
+            var errorReport = new ErrorReport
             {
                 AppId = "apps/1",
                 Category = "category",
@@ -33,13 +33,13 @@ namespace ErrorGun.Tests
             var mockErrorService = new Mock<IErrorService>();
             mockErrorService
                 .Setup(
-                    s => s.ReportError(It.IsAny<ErrorReport>()))
-                .Returns(error);
+                    s => s.ReportError(It.IsAny<ErrorReport>(), "api-key"))
+                .Returns(errorReport);
 
             var controller = new ErrorsController(mockErrorService.Object);
             SetupTestableApiController(controller);
 
-            var response = controller.Post(error);
+            var response = controller.Post(errorReport, "api-key");
             var responseErrorTask = response.Content.ReadAsAsync<ErrorReport>();
             responseErrorTask.Wait();
             var responseError = responseErrorTask.Result;

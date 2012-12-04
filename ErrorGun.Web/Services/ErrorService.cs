@@ -17,7 +17,7 @@ namespace ErrorGun.Web.Services
             _emailService = emailService;
         }
 
-        public ErrorReport ReportError(ErrorReport errorReport)
+        public ErrorReport ReportError(ErrorReport errorReport, string apiKey)
         {
             using (var session = _documentStore.OpenSession())
             {
@@ -31,7 +31,7 @@ namespace ErrorGun.Web.Services
                 }
 
                 // validate
-                ThrowOnInvalidErrorReport(errorReport, app);
+                ThrowOnInvalidErrorReport(errorReport, apiKey, app);
 
                 // store
                 var errorReportToStore = new ErrorReport
@@ -67,7 +67,7 @@ namespace ErrorGun.Web.Services
             }
         }
 
-        private static void ThrowOnInvalidErrorReport(ErrorReport errorReport, App app)
+        private static void ThrowOnInvalidErrorReport(ErrorReport errorReport, string apiKey, App app)
         {
             var errorCodes = new List<ErrorCode>();
 
@@ -75,7 +75,14 @@ namespace ErrorGun.Web.Services
                 errorCodes.Add(ErrorCode.ErrorReport_MissingAppId);
 
             if (app == null)
+            {
                 errorCodes.Add(ErrorCode.ErrorReport_AppDoesNotExist);
+            }
+            else
+            {
+                if (!String.Equals(app.ApiKey, apiKey, StringComparison.Ordinal))
+                    errorCodes.Add(ErrorCode.ErrorReport_InvalidApiKey);
+            }
 
             if (String.IsNullOrWhiteSpace(errorReport.Message))
                 errorCodes.Add(ErrorCode.ErrorReport_MissingMessage);

@@ -5,6 +5,6 @@ namespace ErrorGun.Web.Services
 {
     public interface IErrorService
     {
-        ErrorReport ReportError(ErrorReport errorReport);
+        ErrorReport ReportError(ErrorReport errorReport, string apiKey);
     }
 }

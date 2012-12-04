@@ -18,9 +18,11 @@ namespace ErrorGun.Web.Controllers
         }
 
         // POST api/errors
-        public HttpResponseMessage Post(ErrorReport error)
+        public HttpResponseMessage Post(
+            [FromBody] ErrorReport error,
+            [FromUri] string apiKey)
         {
-            var savedError = _errorService.ReportError(error);
+            var savedError = _errorService.ReportError(error, apiKey);
 
             var response = Request.CreateResponse(HttpStatusCode.Created, savedError);
 

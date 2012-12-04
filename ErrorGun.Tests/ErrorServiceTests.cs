@@ -4,7 +4,6 @@ using ErrorGun.Common;
 using ErrorGun.Web.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Raven.Client.Embedded;
 
 namespace ErrorGun.Tests
 {
@@ -44,7 +43,7 @@ namespace ErrorGun.Tests
             var testError = new ErrorReport();
             try
             {
-                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError);
+                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError, null);
             }
             catch (ServiceValidationException serviceEx)
             {
@@ -66,11 +65,32 @@ namespace ErrorGun.Tests
             };
             try
             {
-                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError);
+                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError, "apikey");
             }
             catch (ServiceValidationException serviceEx)
             {
                 Assert.IsTrue(serviceEx.ErrorCodes.Contains(ErrorCode.ErrorReport_InvalidUserEmail));
+                Assert.AreEqual(1, serviceEx.ErrorCodes.Count);
+            }
+        }
+
+        [TestMethod]
+        public void ErrorService_InvalidApiKeyValidation()
+        {
+            var testError = new ErrorReport
+            {
+                AppId = _TestAppId,
+                Message = "test report",
+                UserEmail = "ok@good.com"
+            };
+            try
+            {
+                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError, "bad api key");
+            }
+            catch (ServiceValidationException serviceEx)
+            {
+                Assert.IsTrue(serviceEx.ErrorCodes.Contains(ErrorCode.ErrorReport_InvalidApiKey));
+                Assert.AreEqual(1, serviceEx.ErrorCodes.Count);
             }
         }
 
@@ -85,11 +105,12 @@ namespace ErrorGun.Tests
             };
             try
             {
-                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError);
+                new ErrorService(DocumentStore, _MockEmailService.Object).ReportError(testError, null);
             }
             catch (ServiceValidationException serviceEx)
             {
                 Assert.IsTrue(serviceEx.ErrorCodes.Contains(ErrorCode.ErrorReport_AppDoesNotExist));
+                Assert.AreEqual(1, serviceEx.ErrorCodes.Count);
             }
         }
 
@@ -108,7 +129,7 @@ namespace ErrorGun.Tests
             };
 
             var service = new ErrorService(DocumentStore, _MockEmailService.Object);
-            var reportedError = service.ReportError(error);
+            var reportedError = service.ReportError(error, "apikey");
 
             Assert.IsFalse(String.IsNullOrEmpty(reportedError.Id));
             _MockEmailService.Verify(s => s.SendErrorReports(It.IsAny<App>(), It.IsAny<ErrorReport>(), It.IsAny<IEnumerable<string>>()));
