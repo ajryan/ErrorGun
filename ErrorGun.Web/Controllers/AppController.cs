@@ -16,7 +16,7 @@ namespace ErrorGun.Web.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(new AppModel());
         }
 
         [HttpPost]
