@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using ErrorGun.Web.Filters;
 
-namespace ErrorGun.Web
+namespace ErrorGun.Web.App_Start
 {
     public static class FilterConfig
     {

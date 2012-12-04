@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using ErrorGun.Web.App_Start;
 using ErrorGun.Web.Controllers;
 using ErrorGun.Web.Injection;
 using ErrorGun.Web.Services;

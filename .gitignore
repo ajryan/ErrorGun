@@ -16,3 +16,4 @@ packages/
 *.vspscc
 *.sublime-project
 *.sublime-workspace
+*.tmp

@@ -3,7 +3,7 @@ using System.Web.Http;
 using ErrorGun.Web.Injection;
 using Ninject;
 
-namespace ErrorGun.Web
+namespace ErrorGun.Web.App_Start
 {
     public static class WebApiConfig
     {

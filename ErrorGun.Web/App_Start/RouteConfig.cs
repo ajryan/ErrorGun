@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace ErrorGun.Web
+namespace ErrorGun.Web.App_Start
 {
     public static class RouteConfig
     {

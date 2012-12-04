@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <PrecompileRazorFiles>true</PrecompileRazorFiles>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -115,6 +116,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RavenDB.Database.2.0.2161-Unstable\lib\net40\Raven.Database.dll</HintPath>
     </Reference>
+    <Reference Include="RazorGenerator.Mvc">
+      <HintPath>..\packages\RazorGenerator.Mvc.1.4.0.0\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Spatial4n.Core.NTS, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9f9456e1ca16d45e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RavenDB.Database.2.0.2161-Unstable\lib\net40\Spatial4n.Core.NTS.dll</HintPath>
@@ -179,11 +183,15 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Filters\LogExceptionsAttribute.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -223,6 +231,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Admin\Booger.cshtml" />
     <None Include="Web.nlog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -231,11 +240,21 @@
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
-    <Content Include="Views\App\Complete.cshtml" />
-    <Content Include="Views\App\ConfirmEmail.cshtml" />
-    <Content Include="Views\Fail\NotFound.cshtml" />
-    <Content Include="Views\Fail\ServerError.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\App\Complete.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\App\ConfirmEmail.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Fail\NotFound.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Fail\ServerError.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Admin\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
     <TypeScriptCompile Include="Scripts\AppCreate.ts" />
     <Content Include="Scripts\AppCreate.js">
       <DependentUpon>AppCreate.ts</DependentUpon>
@@ -263,7 +282,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\App\Create.cshtml" />
+    <Content Include="Views\App\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

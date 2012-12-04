@@ -20,6 +20,5 @@ namespace ErrorGun.Web.Controllers
         {
             return View(new AdminModel(password, appPage, _documentStore));
         }
-
     }
 }
