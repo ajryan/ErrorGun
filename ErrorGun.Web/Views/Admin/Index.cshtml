@@ -24,16 +24,25 @@
         <div>
             <span>Apps:</span>
             <ul>
-                @foreach (var app in Model.Apps)
-                {
+                @foreach (var app in Model.Apps) {
                     <li>
                         <span style="white-space: pre-line">@app.ToString()</span>
                     </li>
                 }
             </ul>
-            @Html.ActionLink("Prev", "Index", new { password = Model.Password, appPage = Model.AppPage - 1 })
-            <span>Page: @Model.AppPage</span>
-            @Html.ActionLink("Next", "Index", new { password = Model.Password, appPage = Model.AppPage + 1 })
+            @if (Model.AppPage < 2) {
+                <span>Prev</span>
+            }
+            else {
+                @Html.ActionLink("Prev", "Index", new { password = Model.Password, appPage = Model.AppPage - 1 })
+            }
+            <span>Page: @Model.AppPage of @Model.AppPageCount</span>
+            @if (Model.AppPage < Model.AppPageCount) {
+                @Html.ActionLink("Next", "Index", new {password = Model.Password, appPage = Model.AppPage + 1})
+            }
+            else {
+                <span>Next</span>
+            }
         </div>
     </body>
 </html>

@@ -15,7 +15,7 @@ namespace ErrorGun.Web.Models
         public override string ToString()
         {
             return String.Format(
-                "Id: {0};\r\nApiKey:{1};\r\nName: {2};\r\nContactEmails: {3};\r\nCreatedTimestampUtc: {4}",
+                "Id: {0};\r\nApiKey: {1};\r\nName: {2};\r\nContactEmails: {3};\r\nCreatedTimestampUtc: {4}",
                 Id,
                 ApiKey,
                 Name,

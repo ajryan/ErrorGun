@@ -15,6 +15,7 @@ namespace ErrorGun.Web.Models
 
         public string Password { get; set; }
         public int AppPage { get; set; }
+        public int AppPageCount { get; set; }
 
         public string Message { get; set; }
         public string ServerBitness { get; set; }
@@ -25,6 +26,7 @@ namespace ErrorGun.Web.Models
         {
             Password = password;
             AppPage = Math.Max(1, appPage);
+            AppPageCount = 1;
             Apps = new List<AppModel>();
 
             bool passwordCorrect = (password == _AdminPassword);
@@ -38,8 +40,11 @@ namespace ErrorGun.Web.Models
 
             using (var session = documentStore.OpenSession())
             {
+                RavenQueryStatistics stats;
+
                 Apps = session
                     .Query<App>()
+                    .Statistics(out stats)
                     .Skip((AppPage - 1) * APP_PAGE_SIZE)
                     .Take(APP_PAGE_SIZE)
                     .ToArray()
@@ -53,6 +58,10 @@ namespace ErrorGun.Web.Models
                         Name = app.Name
                     })
                     .ToList();
+
+                AppPageCount = stats.TotalResults / APP_PAGE_SIZE;
+                if (stats.TotalResults % APP_PAGE_SIZE > 0)
+                    AppPageCount++;
             }
         }
     }
