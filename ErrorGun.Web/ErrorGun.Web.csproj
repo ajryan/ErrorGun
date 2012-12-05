@@ -231,7 +231,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
-    <Content Include="Views\Admin\Booger.cshtml" />
     <None Include="Web.nlog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
