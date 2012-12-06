@@ -10,7 +10,7 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using RazorGenerator.Mvc;
 
-[assembly: WebActivator.PostApplicationStartMethod(typeof(ErrorGun.Web.App_Start.RazorGeneratorMvcStart), "Start")]
+//[assembly: WebActivator.PostApplicationStartMethod(typeof(ErrorGun.Web.App_Start.RazorGeneratorMvcStart), "Start")]
 
 namespace ErrorGun.Web.App_Start
 {
@@ -33,7 +33,7 @@ namespace ErrorGun.Web.App_Start
                          
                 var engine = new PrecompiledMvcEngine(typeof (RazorGeneratorMvcStart).Assembly)
                 {
-                    UsePhysicalViewsIfNewer = HttpContext.Current.Request.IsLocal
+                    UsePhysicalViewsIfNewer = MvcApplication.DebugEnvironment
                 };
 
                 ViewEngines.Engines.Insert(0, engine);

@@ -5,12 +5,14 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.WebPages;
 using ErrorGun.Web.App_Start;
 using ErrorGun.Web.Controllers;
 using ErrorGun.Web.Injection;
 using ErrorGun.Web.Services;
 using NLog;
 using Ninject;
+using RazorGenerator.Mvc;
 
 namespace ErrorGun.Web
 {
@@ -34,6 +36,16 @@ namespace ErrorGun.Web
             {
                 LogManager.DisableLogging();
             }
+
+            var engine = new PrecompiledMvcEngine(typeof(RazorGeneratorMvcStart).Assembly)
+            {
+                UsePhysicalViewsIfNewer = MvcApplication.DebugEnvironment
+            };
+
+            ViewEngines.Engines.Insert(0, engine);
+
+            // StartPage lookups are done by WebPages. 
+            VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
 
             AreaRegistration.RegisterAllAreas();
             
