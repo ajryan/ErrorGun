@@ -54,10 +54,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RavenDB.Database.2.0.2161-Unstable\lib\net40\GeoAPI.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Core">
+    <Reference Include="Glimpse.Core, Version=0.87.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Glimpse.0.87\lib\net40\Glimpse.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Mvc3">
+    <Reference Include="Glimpse.Mvc3, Version=0.87.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Glimpse.Mvc3.0.87\lib\net40\Glimpse.Mvc3.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
@@ -237,6 +239,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\LocalWebDeploy.pubxml" />
     <None Include="Web.nlog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
