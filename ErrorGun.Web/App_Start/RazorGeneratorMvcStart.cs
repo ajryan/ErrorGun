@@ -17,8 +17,6 @@ namespace ErrorGun.Web.App_Start
 
             try
             {
-                ViewEngines.Engines.Clear();
-
                 var engine = new PrecompiledMvcEngine(typeof (RazorGeneratorMvcStart).Assembly)
                 {
                     UsePhysicalViewsIfNewer = HttpContext.Current.Request.IsLocal
