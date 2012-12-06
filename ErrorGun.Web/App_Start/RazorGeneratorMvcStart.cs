@@ -22,14 +22,14 @@ namespace ErrorGun.Web.App_Start
 
             try
             {
-                IDictionary<string, Type> _mappings = 
-                    (from type in assembly.GetTypes()
+                List<string> virtualPaths = 
+                    (from type in typeof (RazorGeneratorMvcStart).Assembly.GetTypes()
                          where typeof(WebPageRenderingBase).IsAssignableFrom(type)
                          let pageVirtualPath = type.GetCustomAttributes(inherit: false).OfType<PageVirtualPathAttribute>().FirstOrDefault()
                          where pageVirtualPath != null
-                         select new KeyValuePair<string, Type>(CombineVirtualPaths(_baseVirtualPath, pageVirtualPath.VirtualPath), type)
-                         ).ToDictionary(t => t.Key, t => t.Value, StringComparer.OrdinalIgnoreCase);
-                new LogEvent("Available views count " + _mappings.Count).Raise();
+                         select pageVirtualPath.VirtualPath
+                         ).ToList();
+                new LogEvent("Available views count " + virtualPaths.Count).Raise();
                          
                 var engine = new PrecompiledMvcEngine(typeof (RazorGeneratorMvcStart).Assembly)
                 {
