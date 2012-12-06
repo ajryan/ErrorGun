@@ -48,14 +48,21 @@ namespace ErrorGun.Web.Services
 
         private static string GetRouteValue(string key)
         {
-            if (HttpContext.Current == null ||
-                HttpContext.Current.Request.RequestContext.RouteData == null ||
-                !HttpContext.Current.Request.RequestContext.RouteData.Values.ContainsKey(key))
+            try
+            {
+                if (HttpContext.Current == null ||
+                    HttpContext.Current.Request.RequestContext.RouteData == null ||
+                    !HttpContext.Current.Request.RequestContext.RouteData.Values.ContainsKey(key))
+                {
+                    return null;
+                }
+
+                return HttpContext.Current.Request.RequestContext.RouteData.Values[key].ToString();
+            }
+            catch (HttpException)
             {
                 return null;
             }
-
-            return HttpContext.Current.Request.RequestContext.RouteData.Values[key].ToString();
         }
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Web;
+using System.Web.Management;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using RazorGenerator.Mvc;
@@ -11,17 +13,42 @@ namespace ErrorGun.Web.App_Start
     {
         public static void Start()
         {
-            ViewEngines.Engines.Clear();
+            new LogEvent("RazorGeneratorMvcStart Begin").Raise();
 
-            var engine = new PrecompiledMvcEngine(typeof(RazorGeneratorMvcStart).Assembly)
+            try
             {
-                UsePhysicalViewsIfNewer = HttpContext.Current.Request.IsLocal
-            };
+                ViewEngines.Engines.Clear();
 
-            ViewEngines.Engines.Insert(0, engine);
+                var engine = new PrecompiledMvcEngine(typeof (RazorGeneratorMvcStart).Assembly)
+                {
+                    UsePhysicalViewsIfNewer = HttpContext.Current.Request.IsLocal
+                };
 
-            // StartPage lookups are done by WebPages. 
-            VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
+                ViewEngines.Engines.Insert(0, engine);
+
+                // StartPage lookups are done by WebPages. 
+                VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
+            }
+            catch (Exception ex)
+            {
+                new LogEvent(ex).Raise();
+                throw;
+            }
+
+            new LogEvent("RazorGeneratorMvcStart End").Raise();
+        }
+
+        private class LogEvent : WebRequestErrorEvent
+        {
+            public LogEvent(string message)
+                : this(new Exception(message))
+            {
+            }
+
+            public LogEvent(Exception exception)
+                : base(null, null, 100001, exception)
+            {
+            }
         }
     }
 }
