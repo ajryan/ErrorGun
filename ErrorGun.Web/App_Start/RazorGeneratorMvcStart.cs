@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Web;
+using System.Web.Compilation;
 using System.Web.Management;
 using System.Web.Mvc;
 using System.Web.WebPages;
@@ -17,6 +22,15 @@ namespace ErrorGun.Web.App_Start
 
             try
             {
+                IDictionary<string, Type> _mappings = 
+                    (from type in assembly.GetTypes()
+                         where typeof(WebPageRenderingBase).IsAssignableFrom(type)
+                         let pageVirtualPath = type.GetCustomAttributes(inherit: false).OfType<PageVirtualPathAttribute>().FirstOrDefault()
+                         where pageVirtualPath != null
+                         select new KeyValuePair<string, Type>(CombineVirtualPaths(_baseVirtualPath, pageVirtualPath.VirtualPath), type)
+                         ).ToDictionary(t => t.Key, t => t.Value, StringComparer.OrdinalIgnoreCase);
+                new LogEvent("Available views count " + _mappings.Count).Raise();
+                         
                 var engine = new PrecompiledMvcEngine(typeof (RazorGeneratorMvcStart).Assembly)
                 {
                     UsePhysicalViewsIfNewer = HttpContext.Current.Request.IsLocal
