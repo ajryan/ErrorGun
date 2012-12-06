@@ -73,7 +73,8 @@ namespace ErrorGun.Web
 
             // if there is an exception, log it.
             var lastException = Server.GetLastError();
-            LoggingService.LogException("Displaying custom error for Application_EndRequest", lastException);
+            if (lastException != null)
+                LoggingService.LogException("Displaying custom error for Application_EndRequest", lastException);
 
             var routeData = new RouteData();
             routeData.Values["controller"] = "Fail";
