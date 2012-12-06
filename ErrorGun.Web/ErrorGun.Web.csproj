@@ -191,6 +191,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Filters\LogExceptionsAttribute.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -252,6 +253,9 @@
     <Content Include="Views\Admin\Index.cshtml">
       <Generator>RazorGenerator</Generator>
     </Content>
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
     <TypeScriptCompile Include="Scripts\AppCreate.ts" />
     <Content Include="Scripts\AppCreate.js">
       <DependentUpon>AppCreate.ts</DependentUpon>
