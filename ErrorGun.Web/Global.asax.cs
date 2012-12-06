@@ -37,14 +37,9 @@ namespace ErrorGun.Web
                 LogManager.DisableLogging();
             }
 
-            var engine = new PrecompiledMvcEngine(typeof(RazorGeneratorMvcStart).Assembly)
-            {
-                UsePhysicalViewsIfNewer = MvcApplication.DebugEnvironment
-            };
-
+            // Register RazorGenerator view engine
+            var engine = new PrecompiledMvcEngine(typeof(MvcApplication).Assembly) { UsePhysicalViewsIfNewer = DebugEnvironment };
             ViewEngines.Engines.Insert(0, engine);
-
-            // StartPage lookups are done by WebPages. 
             VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
 
             AreaRegistration.RegisterAllAreas();
