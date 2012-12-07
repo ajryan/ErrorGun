@@ -66,15 +66,17 @@ namespace ErrorGun.Web
             if (!_StatusFailActionMap.ContainsKey(Context.Response.StatusCode))
                 return;
 
+            // if we have already executed a fail action, nothing to do
+            if (Context.Request.Path.StartsWith("/Fail/NotFound", StringComparison.OrdinalIgnoreCase) ||
+                Context.Request.Path.StartsWith("/Fail/ServerError", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             // for non-local requests, do not serve the built-in
             // error page
             if (!Context.Request.IsLocal)
                 Response.Clear();
-
-            // if there is an exception, log it.
-            var lastException = Server.GetLastError();
-            if (lastException != null)
-                LoggingService.LogException("Displaying custom error for Application_EndRequest", lastException);
 
             var routeData = new RouteData();
             routeData.Values["controller"] = "Fail";
