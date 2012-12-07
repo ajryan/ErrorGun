@@ -5,14 +5,11 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.WebPages;
 using ErrorGun.Web.App_Start;
 using ErrorGun.Web.Controllers;
 using ErrorGun.Web.Injection;
-using ErrorGun.Web.Services;
 using NLog;
 using Ninject;
-using RazorGenerator.Mvc;
 
 namespace ErrorGun.Web
 {
@@ -32,18 +29,10 @@ namespace ErrorGun.Web
 
         protected void Application_Start()
         {
-            if (!DebugEnvironment)
-            {
-                LogManager.DisableLogging();
-            }
+            if (!DebugEnvironment) { LogManager.DisableLogging(); }
 
-            // Register RazorGenerator view engine
-            var engine = new PrecompiledMvcEngine(typeof(MvcApplication).Assembly) { UsePhysicalViewsIfNewer = DebugEnvironment };
-            ViewEngines.Engines.Insert(0, engine);
-            VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
+            ViewEngineConfig.RegisterViewEngines(ViewEngines.Engines);
 
-            AreaRegistration.RegisterAllAreas();
-            
             var kernel = new StandardKernel(new ErrorGunWebServicesModule());
 
             WebApiConfig.Register(GlobalConfiguration.Configuration, kernel);
@@ -61,8 +50,7 @@ namespace ErrorGun.Web
 
         protected void Application_EndRequest()
         {
-            // if we don't have special handling for the current status code,
-            // nothing to do
+            // if we don't have special handling for the current status code, nothing to do
             if (!_StatusFailActionMap.ContainsKey(Context.Response.StatusCode))
                 return;
 
@@ -73,8 +61,7 @@ namespace ErrorGun.Web
                 return;
             }
 
-            // for non-local requests, do not serve the built-in
-            // error page
+            // for non-local requests, do not serve the built-in error page
             if (!Context.Request.IsLocal)
                 Response.Clear();
 

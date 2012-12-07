@@ -191,6 +191,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="App_Start\ViewEngineConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Filters\LogExceptionsAttribute.cs" />
