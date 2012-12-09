@@ -10,12 +10,12 @@ namespace ErrorGun.Tests
     public class KeyGeneratorTests
     {
         [TestMethod]
-        public void KeyGenerator_GeneratesOneThousandUniqueKeys_WithValidFormat()
+        public void KeyGenerator_GeneratesOneHundredUniqueKeys_WithValidFormat()
         {
             var hexRegex = new Regex(@"^[0-9a-z\-]*$", RegexOptions.Compiled);
             var set = new HashSet<string>();
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var key = KeyGenerator.Generate();
                 Assert.IsTrue(hexRegex.IsMatch(key));
