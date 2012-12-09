@@ -2,9 +2,12 @@
 
 namespace ErrorGun.Common
 {
+    // Keep in sync with ErrorCodes.ts
+
     // ReSharper disable InconsistentNaming
     public enum ErrorCode
     {
+        App_MissingAppModel,
         App_MissingName,
         App_MissingContactEmail,
         App_InvalidEmailFormat,

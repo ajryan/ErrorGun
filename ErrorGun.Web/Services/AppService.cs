@@ -25,7 +25,7 @@ namespace ErrorGun.Web.Services
 
             using (var session = _documentStore.OpenSession())
             {
-                var contactEmails = SplitAndTrimEmails(appModel.ContactEmails)
+                var contactEmails = TrimmedEmails(appModel.ContactEmails)
                     .Select(
                         address => new ContactEmail
                         {
@@ -56,7 +56,7 @@ namespace ErrorGun.Web.Services
                 {
                     Id = newApp.Id,
                     Name = newApp.Name,
-                    ContactEmails = String.Join(", ", contactEmails.Select(ce => ce.EmailAddress)),
+                    ContactEmails = contactEmails.Select(ce => ce.EmailAddress).ToList(),
                     ApiKey = newApp.ApiKey
                 };
             }
@@ -95,32 +95,37 @@ namespace ErrorGun.Web.Services
         {
             var errorCodes = new List<ErrorCode>();
 
-            if (string.IsNullOrWhiteSpace(appModel.Name))
-                errorCodes.Add(ErrorCode.App_MissingName);
-
-            if (string.IsNullOrWhiteSpace(appModel.ContactEmails))
+            if (appModel == null)
             {
-                errorCodes.Add(ErrorCode.App_MissingContactEmail);
+                errorCodes.Add(ErrorCode.App_MissingAppModel);
             }
             else
             {
-                var emails = SplitAndTrimEmails(appModel.ContactEmails);
-                
-                if (emails.Any(email => !EmailValidator.Validate(email)))
-                    errorCodes.Add(ErrorCode.App_InvalidEmailFormat);
+                if (string.IsNullOrWhiteSpace(appModel.Name))
+                    errorCodes.Add(ErrorCode.App_MissingName);
 
-                if (emails.HasDuplicate())
-                    errorCodes.Add(ErrorCode.App_DuplicateContactEmails);
+                if (appModel.ContactEmails.Count == 0)
+                {
+                    errorCodes.Add(ErrorCode.App_MissingContactEmail);
+                }
+                else
+                {
+                    var emails = TrimmedEmails(appModel.ContactEmails);
+
+                    if (emails.Any(email => !EmailValidator.Validate(email)))
+                        errorCodes.Add(ErrorCode.App_InvalidEmailFormat);
+
+                    if (emails.HasDuplicate())
+                        errorCodes.Add(ErrorCode.App_DuplicateContactEmails);
+                }
             }
-
             if (errorCodes.Count > 0)
                 throw new ServiceValidationException(errorCodes);
         }
 
-        private static string[] SplitAndTrimEmails(string emails)
+        private static List<string> TrimmedEmails(List<string> emails)
         {
-            var tokens = emails.Split(',');
-            return tokens.Select(t => t.Trim()).ToArray();
+            return emails.Select(e => e.Trim()).ToList();
         }
     }
 }

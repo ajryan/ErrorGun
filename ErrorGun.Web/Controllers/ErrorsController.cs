@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ErrorGun.Common;
+using ErrorGun.Web.Filters;
 using ErrorGun.Web.Services;
 
 namespace ErrorGun.Web.Controllers
@@ -17,6 +18,7 @@ namespace ErrorGun.Web.Controllers
             _errorService = errorService;
         }
 
+        // TODO: move api key to header, and implement auth attribute
         // POST api/errors
         public HttpResponseMessage Post(
             [FromBody] ErrorReport error,

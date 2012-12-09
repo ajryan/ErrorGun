@@ -40,7 +40,7 @@ namespace ErrorGun.Tests
             var badApp = new AppModel
             {
                 Name = "MyApp", 
-                ContactEmails = "not_an_email_address"
+                ContactEmails = {"not_an_email_address"}
             };
 
             try
@@ -61,7 +61,7 @@ namespace ErrorGun.Tests
             var badApp = new AppModel
             {
                 Name = "MyApp",
-                ContactEmails = "a@a.com, a@a.com"
+                ContactEmails = {"a@a.com", "a@a.com"}
             };
 
             try
@@ -82,7 +82,7 @@ namespace ErrorGun.Tests
             var badApp = new AppModel
             {
                 Name = "MyApp",
-                ContactEmails = "ok@good.com, not_an_email_address"
+                ContactEmails = {"ok@good.com", "not_an_email_address"}
             };
 
             try
@@ -118,7 +118,7 @@ namespace ErrorGun.Tests
             var appService = new AppService(DocumentStore, _MockEmailService.Object);
 
             // Save via service
-            var validApp = new AppModel { Name = "MyApp", ContactEmails = "ok@good.com, alsoOk@email.com" };
+            var validApp = new AppModel { Name = "MyApp", ContactEmails = {"ok@good.com", "alsoOk@email.com"} };
             var savedApp = appService.CreateApp(validApp);
             string savedAppId = savedApp.Id;
 

@@ -53,7 +53,7 @@ namespace ErrorGun.Web.Models
                     {
                         Id = app.Id,
                         ApiKey = app.ApiKey,
-                        ContactEmails = String.Join(", ", app.ContactEmailIds),
+                        ContactEmails = app.ContactEmailIds,
                         CreatedTimestampUtc = app.CreatedTimestampUtc,
                         Name = app.Name
                     })

@@ -37,7 +37,7 @@ namespace ErrorGun.Tests
                 .Returns(errorReport);
 
             var controller = new ErrorsController(mockErrorService.Object);
-            SetupTestableApiController(controller);
+            WebApiControllerHelper.MakeTestable(controller, "errors");
 
             var response = controller.Post(errorReport, "api-key");
             var responseErrorTask = response.Content.ReadAsAsync<ErrorReport>();
@@ -46,20 +46,6 @@ namespace ErrorGun.Tests
 
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             Assert.AreEqual("apps/1", responseError.AppId);
-        }
-
-        private static void SetupTestableApiController(ApiController apiController)
-        {
-            var config = new HttpConfiguration();
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/errors");
-
-            var route = config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
-            var routeData = new HttpRouteData(route, new HttpRouteValueDictionary { { "controller", "errors" } });
-
-            apiController.ControllerContext = new HttpControllerContext(config, routeData, request);
-            apiController.Request = request;
-            apiController.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
-            apiController.Request.Properties[HttpPropertyKeys.HttpRouteDataKey] = routeData;
         }
     }
 }

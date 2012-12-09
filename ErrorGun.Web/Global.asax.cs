@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 using ErrorGun.Web.App_Start;
 using ErrorGun.Web.Controllers;
@@ -38,7 +39,8 @@ namespace ErrorGun.Web
             WebApiConfig.Register(GlobalConfiguration.Configuration, kernel);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(kernel));
         }
 

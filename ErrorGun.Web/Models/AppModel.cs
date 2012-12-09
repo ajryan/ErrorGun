@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ErrorGun.Web.Models
 {
@@ -6,11 +7,16 @@ namespace ErrorGun.Web.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string ContactEmails { get; set; }
+        public List<string> ContactEmails { get; set; }
         public string ApiKey { get; set; }
         public DateTime CreatedTimestampUtc { get; set; }
 
         public string ErrorMessage { get; set; }
+
+        public AppModel()
+        {
+            ContactEmails = new List<string>();
+        }
 
         public override string ToString()
         {
@@ -19,7 +25,7 @@ namespace ErrorGun.Web.Models
                 Id,
                 ApiKey,
                 Name,
-                ContactEmails,
+                "[" + String.Join(", ", ContactEmails) + "]",
                 CreatedTimestampUtc);
         }
     }

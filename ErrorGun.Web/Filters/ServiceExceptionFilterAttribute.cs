@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Web.Http.Filters;
 using ErrorGun.Web.Services;
 
-namespace ErrorGun.Web
+namespace ErrorGun.Web.Filters
 {
     public class ServiceExceptionFilterAttribute : ExceptionFilterAttribute
     {

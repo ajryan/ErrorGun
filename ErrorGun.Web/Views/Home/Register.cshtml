@@ -1,4 +1,5 @@
-﻿@{
+﻿@using ErrorGun.Web.App_Start
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -8,22 +9,39 @@
     </head>
     <body>
         <div>
-        <h1>Create App</h1>
-    </div>
-        <fieldset>
-            <legend>Application</legend>
-            <div>
-                <label for="name">Name: </label>
-                <input type="text" id="name"/>
-            </div>
-            <div>
-                <label for="contactEmails">Contact Emails (separate with commas):</label>
-                <textarea id="contactEmails"></textarea>
-            </div>
-            <input type="submit" name="Create" value="Create"/>
-        </fieldset>
-    <div>
-        Error Message
-    </div>
+            <h1>Register App</h1>
+        </div>
+        <form data-bind="submit: Create">
+            <fieldset>
+                <legend>App</legend>
+                <div data-bind="fadeVisible: ErrorMessage">
+                    <span data-bind="text: ErrorMessage"></span>
+                </div>
+                <div>
+                    <label for="name">App Name</label>
+                    <input type="text" id="name" data-bind="value: Name" />
+                </div>
+                <div>
+                    <span>Contact Emails</span><button data-bind="click: AddContactEmail">Add Contact</button>
+                    <ul data-bind="foreach: ContactEmails">
+                        <li>
+                            <input data-bind="value: Address"/>
+                        </li>
+                    </ul>
+                </div>
+                
+                <input type="submit" name="Register" value="Register" />
+            </fieldset>
+        </form>
+        <div data-bind="fadeVisible: ApiKey">
+            <h2>App Created</h2>
+            Id: <span data-bind="text: Id"></span>
+            ApiKey: <span data-bind="text: ApiKey"></span>
+        </div>
+        @Scripts.Render(BundleConfig.Home_Register)
+        <script>
+            var viewModel = new ErrorGun.AppCreate.ViewModel('@Url.Action("AppComplete")');
+            ko.applyBindings(viewModel);
+        </script>
     </body>
 </html>
