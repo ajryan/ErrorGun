@@ -6,7 +6,7 @@
 </div>
 <form data-bind="submit: Create" class="fourteen columns offset-by-one">
     <label for="name">App Name</label>
-    <input type="text" id="name" data-bind="value: Name" />
+    <input type="text" id="name" data-bind="value: Name, hasfocus: true" />
     <div class="fourteen columns clearfix alpha">
         <div class="three columns alpha">
             <label for="">Contact Emails</label>
@@ -18,7 +18,7 @@
     
     <ul data-bind="foreach: ContactEmails">
         <li>
-            <input type="text" data-bind="value: Address" class="remove-bottom" style="display: inline-block"/>
+            <input type="text" data-bind="value: Address, hasfocus: Focused" class="remove-bottom" style="display: inline-block"/>
             <a data-bind="click: $root.RemoveContactEmail" class="ko-link">[X]</a>
         </li>
     </ul>

@@ -12,7 +12,7 @@ module ErrorGun {
             public ApiKey = ko.observable("");
             public CreatedTimestampUtc = ko.observable("");
             public Name = ko.observable("");
-            public ContactEmails = ko.observableArray([{Address: ko.observable("")}]);
+            public ContactEmails = ko.observableArray([{Address: ko.observable(""), Focused: false}]);
             public ErrorMessage = ko.observable("");
 
             // methods
@@ -57,13 +57,19 @@ module ErrorGun {
                     })
                     .done((ajaxData) => {
                         // TODO: modal "created" with app details
+                        // TODO: ko bindings for disabling everything
+                        $('input').attr('disabled', true);
                         this.ApiKey(ajaxData.ApiKey);
                         this.Id(ajaxData.Id);
                     });
                 }
 
                 this.AddContactEmail = () => {
-                    this.ContactEmails.push({Address: ko.observable("")});
+                    var contactCount = this.ContactEmails().length;
+                    if (this.ContactEmails()[contactCount - 1].Address() === '') {
+                        return false;
+                    }
+                    this.ContactEmails.push({Address: ko.observable(""), Focused: true});
                 }
 
                 this.RemoveContactEmail = (email) => {

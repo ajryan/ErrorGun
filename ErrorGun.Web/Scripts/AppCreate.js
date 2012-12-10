@@ -10,7 +10,8 @@ var ErrorGun;
                 this.Name = ko.observable("");
                 this.ContactEmails = ko.observableArray([
                     {
-                        Address: ko.observable("")
+                        Address: ko.observable(""),
+                        Focused: false
                     }
                 ]);
                 this.ErrorMessage = ko.observable("");
@@ -37,13 +38,19 @@ var ErrorGun;
                         _this.ErrorMessage(errorMessage);
                         $regButton.removeAttr('disabled');
                     }).done(function (ajaxData) {
+                        $('input').attr('disabled', true);
                         _this.ApiKey(ajaxData.ApiKey);
                         _this.Id(ajaxData.Id);
                     });
                 };
                 this.AddContactEmail = function () {
+                    var contactCount = _this.ContactEmails().length;
+                    if(_this.ContactEmails()[contactCount - 1].Address() === '') {
+                        return false;
+                    }
                     _this.ContactEmails.push({
-                        Address: ko.observable("")
+                        Address: ko.observable(""),
+                        Focused: true
                     });
                 };
                 this.RemoveContactEmail = function (email) {

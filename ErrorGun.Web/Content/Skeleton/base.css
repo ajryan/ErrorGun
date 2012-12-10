@@ -199,6 +199,19 @@
 		background: #ccc -ms-linear-gradient(top, rgba(255,255,255,.35) 0%,rgba(10,10,10,.4) 100%); /* IE10+ */
 		background: #ccc linear-gradient(top, rgba(255,255,255,.35) 0%,rgba(10,10,10,.4) 100%); /* W3C */ }
 
+        .button:disabled,
+        button:disabled,
+        input[type="submit"]:disabled,
+        input[type="reset"]:disabled,
+        input[type="button"]:disabled {
+            border: 1px solid #666;
+            background: #999; /* Old browsers */
+            color: #333;
+            cursor: not-allowed;
+            -webkit-text-shadow: none;
+            text-shadow: none;
+        }
+
 	.button.full-width,
 	button.full-width,
 	input[type="submit"].full-width,
