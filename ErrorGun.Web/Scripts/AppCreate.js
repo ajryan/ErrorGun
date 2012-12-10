@@ -16,13 +16,10 @@ var ErrorGun;
                 this.ErrorMessage = ko.observable("");
                 this._errorCodes = new ErrorGun.ErrorCodes();
                 this._completeUrl = completeUrl;
-                this.AddContactEmail = function () {
-                    _this.ContactEmails.push({
-                        Address: ko.observable("")
-                    });
-                };
                 this.Create = function () {
+                    var $regButton = $('#registerButton');
                     _this.ErrorMessage("");
+                    $regButton.attr('disabled', true);
                     var json = ko.toJSON(_this);
                     $.ajax({
                         url: "/api/apps",
@@ -38,10 +35,21 @@ var ErrorGun;
                         });
                         var errorMessage = errorMessages.join("\n");
                         _this.ErrorMessage(errorMessage);
+                        $regButton.removeAttr('disabled');
                     }).done(function (ajaxData) {
                         _this.ApiKey(ajaxData.ApiKey);
                         _this.Id(ajaxData.Id);
                     });
+                };
+                this.AddContactEmail = function () {
+                    _this.ContactEmails.push({
+                        Address: ko.observable("")
+                    });
+                };
+                this.RemoveContactEmail = function (email) {
+                    if(_this.ContactEmails().length > 1) {
+                        _this.ContactEmails.remove(email);
+                    }
                 };
                 this.toJSON = function () {
                     return {

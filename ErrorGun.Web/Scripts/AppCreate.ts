@@ -18,6 +18,7 @@ module ErrorGun {
             // methods
             public Create: () => void;
             public AddContactEmail: () => void;
+            public RemoveContactEmail: (email) => void;
             public toJSON: () => Object;
 
             // fields
@@ -27,12 +28,12 @@ module ErrorGun {
             constructor(completeUrl: string) {
                 this._completeUrl = completeUrl;
 
-                this.AddContactEmail = () => {
-                    this.ContactEmails.push({Address: ko.observable("")});
-                }
-
                 this.Create = () => {
+                    var $regButton = $('#registerButton');
+
                     this.ErrorMessage("");
+                    $regButton.attr('disabled', true);
+
                     var json = ko.toJSON(this);
                     $.ajax({
                         url: "/api/apps",
@@ -52,12 +53,22 @@ module ErrorGun {
                         });
                         var errorMessage = errorMessages.join("\n");
                         this.ErrorMessage(errorMessage);
+                        $regButton.removeAttr('disabled');
                     })
                     .done((ajaxData) => {
                         // TODO: modal "created" with app details
                         this.ApiKey(ajaxData.ApiKey);
                         this.Id(ajaxData.Id);
                     });
+                }
+
+                this.AddContactEmail = () => {
+                    this.ContactEmails.push({Address: ko.observable("")});
+                }
+
+                this.RemoveContactEmail = (email) => {
+                    if (this.ContactEmails().length > 1)
+                        this.ContactEmails.remove(email);
                 }
 
                 this.toJSON = () => {

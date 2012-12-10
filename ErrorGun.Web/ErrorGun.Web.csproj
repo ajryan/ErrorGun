@@ -244,12 +244,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\favicon.ico" />
+    <Content Include="Content\Images\body_bg.png" />
+    <Content Include="Content\Skeleton\base.css" />
+    <Content Include="Content\Skeleton\layout.css" />
+    <Content Include="Content\Skeleton\skeleton.css" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\LocalWebDeploy.pubxml" />
     <Content Include="Scripts\AppCreate.min.js.map">
       <DependentUpon>AppCreate.js</DependentUpon>
     </Content>
     <None Include="Scripts\knockout-2.2.d.ts" />
+    <Content Include="Views\Shared\_Skeleton.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <TypeScriptCompile Include="Scripts\ErrorCodes.ts" />
     <Content Include="Scripts\ErrorCodes.js">
       <DependentUpon>ErrorCodes.ts</DependentUpon>

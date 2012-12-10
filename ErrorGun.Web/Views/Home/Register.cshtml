@@ -1,47 +1,39 @@
 ﻿@using ErrorGun.Web.App_Start
-@{
-    Layout = null;
+
+<h3 class="fourteen columns offset-by-one">Register App</h3>
+<div data-bind="fadeVisible: ErrorMessage" class="ten columns offset-by-three" style="display: none">
+    <span data-bind="text: ErrorMessage" class="warning"></span>
+</div>
+<form data-bind="submit: Create" class="fourteen columns offset-by-one">
+    <label for="name">App Name</label>
+    <input type="text" id="name" data-bind="value: Name" />
+    <div class="fourteen columns clearfix alpha">
+        <div class="three columns alpha">
+            <label for="">Contact Emails</label>
+        </div>
+        <div class="three columns omega">
+            <a data-bind="click: AddContactEmail" class="ko-link">Add Contact</a>
+        </div>
+    </div>
+    
+    <ul data-bind="foreach: ContactEmails">
+        <li>
+            <input type="text" data-bind="value: Address" class="remove-bottom" style="display: inline-block"/>
+            <a data-bind="click: $root.RemoveContactEmail" class="ko-link">[X]</a>
+        </li>
+    </ul>
+    <input type="submit" id="registerButton" name="Register" value="Register" />
+</form>
+<div data-bind="fadeVisible: ApiKey" class="fourteen columns offset-by-one" style="display: none">
+    <h2>App Created</h2>
+    Id: <span data-bind="text: Id"></span>
+    ApiKey: <span data-bind="text: ApiKey"></span>
+</div>
+
+@section EndBodyScripts {
+    @Scripts.Render(AppScript.HomeRegister)
+    <script>
+        var viewModel = new ErrorGun.AppCreate.ViewModel('@Url.Action("AppComplete")');
+        ko.applyBindings(viewModel);
+    </script>
 }
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Register Application - ErrorGun</title>
-    </head>
-    <body>
-        <div>
-            <h1>Register App</h1>
-        </div>
-        <form data-bind="submit: Create">
-            <fieldset>
-                <legend>App</legend>
-                <div data-bind="fadeVisible: ErrorMessage">
-                    <span data-bind="text: ErrorMessage"></span>
-                </div>
-                <div>
-                    <label for="name">App Name</label>
-                    <input type="text" id="name" data-bind="value: Name" />
-                </div>
-                <div>
-                    <span>Contact Emails</span><button data-bind="click: AddContactEmail">Add Contact</button>
-                    <ul data-bind="foreach: ContactEmails">
-                        <li>
-                            <input data-bind="value: Address"/>
-                        </li>
-                    </ul>
-                </div>
-                
-                <input type="submit" name="Register" value="Register" />
-            </fieldset>
-        </form>
-        <div data-bind="fadeVisible: ApiKey">
-            <h2>App Created</h2>
-            Id: <span data-bind="text: Id"></span>
-            ApiKey: <span data-bind="text: ApiKey"></span>
-        </div>
-        @Scripts.Render(BundleConfig.Home_Register)
-        <script>
-            var viewModel = new ErrorGun.AppCreate.ViewModel('@Url.Action("AppComplete")');
-            ko.applyBindings(viewModel);
-        </script>
-    </body>
-</html>

@@ -16,26 +16,32 @@ namespace ErrorGun.Web.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.Title = "Welcome";
             return View();
         }
 
         public ActionResult Register()
         {
+            ViewBag.Title = "Register";
             return View();
         }
 
         public ActionResult Edit()
         {
+            ViewBag.Title = "Edit App";
             return View();
         }
 
         public ActionResult AppComplete(AppModel model)
         {
+            ViewBag.Title = "App Created";
             return View(model);
         }
 
         public ActionResult ConfirmEmail(string confirmationCode)
         {
+            ViewBag.Title = "Confirm Email";
+
             try
             {
                 var confirmedEmail = _appService.ConfirmEmail(confirmationCode);

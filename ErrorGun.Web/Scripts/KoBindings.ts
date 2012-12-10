@@ -2,14 +2,15 @@
 /// <reference path="jquery-1.8.d.ts" />
 
 ko.bindingHandlers["fadeVisible"] = {
-    init: function(element, valueAccessor) {
-        // Initially set the element to be instantly visible/hidden depending on the value
-        var value = valueAccessor();
-        $(element).toggle(ko.utils.unwrapObservable(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
+    init: function (element, valueAccessor) {
+        var value = ko.utils.unwrapObservable(valueAccessor());
+        var visible = $(element).is(':visible');
+        if ((value && !visible) || (!value && visible)) {
+            $(element).toggle(value);
+        }
     },
-    update: function(element, valueAccessor) {
-        // Whenever the value subsequently changes, slowly fade the element in or out
-        var value = valueAccessor();
-        ko.utils.unwrapObservable(value) ? $(element).fadeIn() : $(element).fadeOut();
+    update: function (element, valueAccessor) {
+        var value = ko.utils.unwrapObservable(valueAccessor());
+        value ? $(element).fadeIn() : $(element).fadeOut();
     }
 };
