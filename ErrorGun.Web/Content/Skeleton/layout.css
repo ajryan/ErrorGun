@@ -30,7 +30,7 @@
     }
 
 body {
-    background-image: url('../Images/body_bg.png');
+    background-image: url('/Content/Images/body_bg.png');
     background-repeat: repeat;
 }
 
@@ -56,6 +56,7 @@ span.warning {
     border-radius: 4px;
     padding: 8px 0 8px 20px;
     white-space: pre-line;
+    margin-right: 20px;
 }
 
 a.ko-link {
