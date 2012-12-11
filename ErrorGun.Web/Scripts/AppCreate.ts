@@ -1,6 +1,7 @@
 /// <reference path="knockout-2.2.d.ts" />
 /// <reference path="jquery-1.8.d.ts" />
 /// <reference path="ErrorCodes.ts" />
+"use strict";
 
 module ErrorGun {
     export module AppCreate {
@@ -22,7 +23,6 @@ module ErrorGun {
             public toJSON: () => Object;
 
             // fields
-            private _errorCodes = new ErrorGun.ErrorCodes();
             private _completeUrl: string;
 
             constructor(completeUrl: string) {
@@ -43,15 +43,19 @@ module ErrorGun {
                         data: json
                     })
                     .fail((jqXHR, textStatus) => {
-                        // TODO: special 403 handling, generic for other
-                        // TODO: class that takes jqXHR.responseText on ctor and
-                        //       a ko observable for pushing message 
-                        var responseJson = JSON.parse(jqXHR.responseText);
-                        var errorMessages = [];
-                        responseJson.ErrorCodes.forEach(function (errorCode) {
-                            errorMessages.push(ErrorGun.ErrorCodes.MessageMap[errorCode]);
-                        });
-                        var errorMessage = errorMessages.join("\n");
+                        var errorMessage = "";
+                        try {
+                            // attempt to parse out our custom errorcode
+                            var responseJson = JSON.parse(jqXHR.responseText);
+                            var errorMessages = [];
+                            $.each(responseJson.ErrorCodes, (i, errorCode) => {
+                                errorMessages.push(ErrorGun.ErrorCodes.MessageMap[errorCode]);
+                            });
+                            errorMessage = errorMessages.join("\n");
+                        }
+                        catch (error) {
+                            errorMessage = "An unexpected server error occurred.";
+                        }
                         this.ErrorMessage(errorMessage);
                         $regButton.removeAttr('disabled');
                     })

@@ -13,7 +13,6 @@ namespace ErrorGun.Web.App_Start
             bundles.Add(new ScriptBundle(AppScript.HomeRegister).Include(
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/knockout-{version}.js",
-                "~/Scripts/KoBindings.js",
                 "~/Scripts/ErrorCodes.js",
                 "~/Scripts/AppCreate.js"));
 

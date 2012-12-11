@@ -1,7 +1,7 @@
 ﻿@using ErrorGun.Web.App_Start
 
-<h3 class="fourteen columns offset-by-one">Register App</h3>
-<div data-bind="fadeVisible: ErrorMessage" class="ten columns offset-by-three" style="display: none">
+<h3 class="fourteen columns offset-by-one add-bottom">Register App</h3>
+<div data-bind="visible: ErrorMessage" class="fourteen columns offset-by-one" style="display: none">
     <span data-bind="text: ErrorMessage" class="warning"></span>
 </div>
 <form data-bind="submit: Create" class="fourteen columns offset-by-one">
@@ -24,7 +24,7 @@
     </ul>
     <input type="submit" id="registerButton" name="Register" value="Register" />
 </form>
-<div data-bind="fadeVisible: ApiKey" class="fourteen columns offset-by-one" style="display: none">
+<div data-bind="visible: ApiKey" class="fourteen columns offset-by-one" style="display: none">
     <h2>App Created</h2>
     Id: <span data-bind="text: Id"></span>
     ApiKey: <span data-bind="text: ApiKey"></span>

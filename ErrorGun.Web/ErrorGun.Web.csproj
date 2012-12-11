@@ -246,11 +246,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\favicon.ico" />
+    <Content Include="Content\Fonts\Forque-webfont.svg" />
     <Content Include="Content\Images\body_bg.png" />
     <Content Include="Content\Skeleton\base.css" />
     <Content Include="Content\Skeleton\layout.css" />
     <Content Include="Content\Skeleton\skeleton.css" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Fonts\Forque-webfont.eot" />
+    <Content Include="Content\Fonts\Forque-webfont.ttf" />
+    <Content Include="Content\Fonts\Forque-webfont.woff" />
     <None Include="Properties\PublishProfiles\LocalWebDeploy.pubxml" />
     <Content Include="Scripts\AppCreate.min.js.map">
       <DependentUpon>AppCreate.js</DependentUpon>
@@ -266,13 +270,6 @@
       <DependentUpon>ErrorCodes.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-1.8.d.ts" />
-    <TypeScriptCompile Include="Scripts\KoBindings.ts" />
-    <Content Include="Scripts\KoBindings.js">
-      <DependentUpon>KoBindings.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\KoBindings.min.js">
-      <DependentUpon>KoBindings.ts</DependentUpon>
-    </Content>
     <Content Include="Web.nlog" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.3.js" />

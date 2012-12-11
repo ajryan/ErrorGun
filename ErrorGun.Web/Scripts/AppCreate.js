@@ -1,3 +1,4 @@
+"use strict";
 var ErrorGun;
 (function (ErrorGun) {
     (function (AppCreate) {
@@ -15,7 +16,6 @@ var ErrorGun;
                     }
                 ]);
                 this.ErrorMessage = ko.observable("");
-                this._errorCodes = new ErrorGun.ErrorCodes();
                 this._completeUrl = completeUrl;
                 this.Create = function () {
                     var $regButton = $('#registerButton');
@@ -29,12 +29,17 @@ var ErrorGun;
                         dataType: "json",
                         data: json
                     }).fail(function (jqXHR, textStatus) {
-                        var responseJson = JSON.parse(jqXHR.responseText);
-                        var errorMessages = [];
-                        responseJson.ErrorCodes.forEach(function (errorCode) {
-                            errorMessages.push(ErrorGun.ErrorCodes.MessageMap[errorCode]);
-                        });
-                        var errorMessage = errorMessages.join("\n");
+                        var errorMessage = "";
+                        try  {
+                            var responseJson = JSON.parse(jqXHR.responseText);
+                            var errorMessages = [];
+                            $.each(responseJson.ErrorCodes, function (i, errorCode) {
+                                errorMessages.push(ErrorGun.ErrorCodes.MessageMap[errorCode]);
+                            });
+                            errorMessage = errorMessages.join("\n");
+                        } catch (error) {
+                            errorMessage = "An unexpected server error occurred.";
+                        }
                         _this.ErrorMessage(errorMessage);
                         $regButton.removeAttr('disabled');
                     }).done(function (ajaxData) {

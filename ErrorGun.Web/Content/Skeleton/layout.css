@@ -14,113 +14,115 @@
 	#Media Queries
 	#Font-Face */
 
-/* #Site Styles
+/* #Font-Face
 ================================================== */
-#branding
-{
-    margin-top: 30px;
-    text-align: center;
-    font-weight: bold;
-    -webkit-text-shadow: 0 1px 2px #b8b887;
-    text-shadow: 0 1px 2px #b8b887;
+@font-face {
+    font-family: 'Forque';
+    src: url('/Content/Fonts/Forque-webfont.eot');
+    src: url('/Content/Fonts/Forque-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/Content/Fonts/Forque-webfont.woff') format('woff'),
+         url('/Content/Fonts/Forque-webfont.ttf') format('truetype'),
+         url('/Content/Fonts/Forque-webfont.svg#firsttestRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
-    #branding a {
-        text-decoration: none;
-    }
-
+/* #Site Styles
+================================================== */
 body {
     background-image: url('/Content/Images/body_bg.png');
     background-repeat: repeat;
 }
 
-#wrap {
+#wrap
+{
     background: #f6f7bd; /* Old browsers */
-    background: -moz-linear-gradient(top,  #f6f7bd 0%, #e8e8a7 100%); /* FF3.6+ */
+    background: -moz-linear-gradient(top, #f6f7bd 0%, #e8e8a7 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f7bd), color-stop(100%,#e8e8a7)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #f6f7bd 0%,#e8e8a7 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #f6f7bd 0%,#e8e8a7 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #f6f7bd 0%,#e8e8a7 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #f6f7bd 0%,#e8e8a7 100%); /* W3C */
+    background: -webkit-linear-gradient(top, #f6f7bd 0%,#e8e8a7 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f6f7bd 0%,#e8e8a7 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f6f7bd 0%,#e8e8a7 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #f6f7bd 0%,#e8e8a7 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f7bd', endColorstr='#e8e8a7',GradientType=0 ); /* IE6-9 */
-    border-top: 20px solid #80BCA3;
     border-bottom: 40px solid #BF4D28;
+    -moz-box-shadow: 2px 2px 4px 2px #181511;
+    -webkit-box-shadow: 2px 2px 4px 2px #181511;
+    box-shadow: 2px 2px 4px 2px #181511;
+}
+
+#branding
+{
+    background-color: #80BCA3;
+    border-bottom: #75a38f 5px solid;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+    #branding h1 {
+        font-size: 64px;
+        font-family: Forque, Tahoma, Arial, Helvetica, sans-serif;
+        -webkit-text-shadow: 0 1px 1px #80DCC3;
+        text-shadow: 0 1px 1px #80DCC3;
+    }
+    #branding h5 {
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-top: 5px;
+    }
+    #branding a {
+        text-decoration: none;
+    }
+
+#logo {
+  text-align: center;
 }
 
 span.warning {
     display: block;
-    background: #f2dede;
-    border: #e98a88 1px solid;
+    background: #f1d0c6;
+    border: #df886c 1px solid;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     padding: 8px 0 8px 20px;
     white-space: pre-line;
-    margin-right: 20px;
+    margin: 0 20px 20px auto;
 }
 
 a.ko-link {
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
-    color: #77B07D;
+    color: #53a07e;
 }
-a.ko-link:hover {
-    text-decoration: underline;
-}
+    a.ko-link:hover {
+        text-decoration: underline;
+    }
 
-/* #Page Styles
-================================================== */
 
 /* #Media Queries
 ================================================== */
 
 	/* Smaller than standard 960 (devices and browsers) 
-	
         @media only screen and (max-width: 959px) {}
-    
     */
 
 	/* Tablet Portrait size to standard 960 (devices and browsers) 
-	
         @media only screen and (min-width: 768px) and (max-width: 959px) {}
-
     */
 
-	/* All Mobile Sizes (devices and browser) */
-	@media only screen and (max-width: 767px) {
-        #branding {
-            margin-top: 0;
-        }
-	}
+	/* All Mobile Sizes (devices and browser) 
+        @media only screen and (max-width: 767px) { }
+    */
 
 	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) 
-	
         @media only screen and (min-width: 480px) and (max-width: 767px) {}
-
     */
 
 	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers)
-	
         @media only screen and (max-width: 479px) {}
-
     */
-
-
-/* #Font-Face
-================================================== */
-/* 	This is the proper syntax for an @font-face file
-		Just create a "fonts" folder at the root,
-		copy your FontName into code below and remove
-		comment brackets */
-
-/*	@font-face {
-	    font-family: 'FontName';
-	    src: url('../fonts/FontName.eot');
-	    src: url('../fonts/FontName.eot?iefix') format('eot'),
-	         url('../fonts/FontName.woff') format('woff'),
-	         url('../fonts/FontName.ttf') format('truetype'),
-	         url('../fonts/FontName.svg#webfontZam02nTh') format('svg');
-	    font-weight: normal;
-	    font-style: normal; }
-*/
