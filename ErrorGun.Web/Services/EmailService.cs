@@ -67,7 +67,7 @@ namespace ErrorGun.Web.Services
                 smtpClient.EnableSsl = (_MailgunPort == 587);
                 smtpClient.UseDefaultCredentials = false;
                 smtpClient.Credentials = new NetworkCredential(_MailgunLogin, _MailgunPassword);
-                
+
                 smtpClient.Send(
                     new MailMessage(from, toEmailAddress, subject, body));
             }

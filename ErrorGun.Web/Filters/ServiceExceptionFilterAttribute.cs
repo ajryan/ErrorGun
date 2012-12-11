@@ -26,6 +26,11 @@ namespace ErrorGun.Web.Filters
                 actionExecutedContext.Response.ReasonPhrase = "Validation failed";
                 actionExecutedContext.Response.Headers.Add("X-Status-Reason", "Validation failed");
             }
+            else
+            {
+                LoggingService.LogException("Non-ServiceException in ServiceExceptionFilterAttribute", actionExecutedContext.Exception);
+                base.OnException(actionExecutedContext);
+            }
         }
     }
 }

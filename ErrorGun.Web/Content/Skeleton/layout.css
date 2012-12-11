@@ -97,7 +97,7 @@ a.ko-link {
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
-    color: #53a07e;
+    color: hsl(154, 66%, 35%);
 }
     a.ko-link:hover {
         text-decoration: underline;

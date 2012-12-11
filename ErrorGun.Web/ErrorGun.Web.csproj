@@ -248,6 +248,7 @@
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\Fonts\Forque-webfont.svg" />
     <Content Include="Content\Images\body_bg.png" />
+    <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Skeleton\base.css" />
     <Content Include="Content\Skeleton\layout.css" />
     <Content Include="Content\Skeleton\skeleton.css" />
