@@ -16,6 +16,7 @@ namespace ErrorGun.Web.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.IsHomePage = true;
             ViewBag.Title = "Welcome";
             return View();
         }
@@ -26,29 +27,23 @@ namespace ErrorGun.Web.Controllers
             return View();
         }
 
-        public ActionResult Edit()
+        public ActionResult ViewApp()
         {
-            ViewBag.Title = "Edit App";
+            ViewBag.Title = "View App";
             return View();
-        }
-
-        public ActionResult AppComplete(AppModel model)
-        {
-            ViewBag.Title = "App Created";
-            return View(model);
         }
 
         public ActionResult ConfirmEmail(string confirmationCode)
         {
-            ViewBag.Title = "Confirm Email";
-
             try
             {
                 var confirmedEmail = _appService.ConfirmEmail(confirmationCode);
+                ViewBag.Title = "Email Confirmed";
                 return View(confirmedEmail);
             }
             catch (ServiceValidationException ex)
             {
+                ViewBag.Title = "Email Confirmation Failed";
                 return View(
                     new ConfirmEmailModel
                     {

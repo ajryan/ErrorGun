@@ -1,17 +1,6 @@
-﻿@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Not Found</title>
-    </head>
-    <body>
-        <div>
-            Sorry. The page you were looking for was not found. Return <a href="/">Home</a>.
-        </div>
-        <div>
-            HTTP @Response.StatusCode @Response.StatusDescription
-        </div>
-    </body>
-</html>
+﻿<div class="fourteen columns offset-by-one">
+    <span class="warning">Sorry. The page you were looking for was not found. Return <a href="/">Home</a>.</span>
+    <div>
+        HTTP @Response.StatusCode @Response.StatusDescription
+    </div>
+</div>

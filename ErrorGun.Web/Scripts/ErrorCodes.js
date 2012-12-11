@@ -15,6 +15,13 @@ var ErrorGun;
             "ErrorReport_InvalidUserEmail": "UserEmail format is invalid.",
             "ConfirmEmail_EmailDoesNotExist": "There is no app contact email with the provided address."
         };
+        ErrorCodes.GetErrorMessages = function GetErrorMessages(errorCodes) {
+            var errorMessages = [];
+            $.each(errorCodes, function (i, errorCode) {
+                errorMessages.push(ErrorGun.ErrorCodes.MessageMap[errorCode]);
+            });
+            return errorMessages.join("\n");
+        }
         return ErrorCodes;
     })();
     ErrorGun.ErrorCodes = ErrorCodes;    

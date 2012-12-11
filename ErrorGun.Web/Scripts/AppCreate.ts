@@ -47,11 +47,7 @@ module ErrorGun {
                         try {
                             // attempt to parse out our custom errorcode
                             var responseJson = JSON.parse(jqXHR.responseText);
-                            var errorMessages = [];
-                            $.each(responseJson.ErrorCodes, (i, errorCode) => {
-                                errorMessages.push(ErrorGun.ErrorCodes.MessageMap[errorCode]);
-                            });
-                            errorMessage = errorMessages.join("\n");
+                            errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(responseJson.ErrorCodes);
                         }
                         catch (error) {
                             errorMessage = "An unexpected server error occurred.";

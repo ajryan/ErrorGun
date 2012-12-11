@@ -27,7 +27,12 @@
 
         @RenderBody()
 
-        <!-- need footer -->
+        <br class="clear"/>
+        <div id="footer">
+            @if (ViewBag.IsHomePage == null || !ViewBag.IsHomePage) {
+                @Html.ActionLink("Home", "Index", "Home")
+            }
+        </div>
     </div>
     @RenderSection("EndBodyScripts", required: false)
 </body>

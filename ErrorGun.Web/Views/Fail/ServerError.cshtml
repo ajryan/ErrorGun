@@ -1,17 +1,6 @@
-﻿@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Server Error</title>
-    </head>
-    <body>
-        <div>
-            Sorry. A server error occurred while trying to serve your request. Return <a href="/">Home</a>.
-        </div>
-        <div>
-            HTTP @Response.StatusCode @Response.StatusDescription
-        </div>
-    </body>
-</html>
+﻿<div class="fourteen columns offset-by-one">
+    <span class="warning">Sorry. A server error occurred while trying to serve your request. Return <a href="/">Home</a>.</span>
+    <div>
+        HTTP @Response.StatusCode @Response.StatusDescription
+    </div>
+</div>

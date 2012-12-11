@@ -9,6 +9,8 @@ namespace ErrorGun.Web.Controllers
     {
         public ActionResult NotFound()
         {
+            ViewBag.Title = "Not Found";
+
             const int notFound = (int) HttpStatusCode.NotFound;
 
             LogCurrentServerError(notFound);
@@ -19,6 +21,8 @@ namespace ErrorGun.Web.Controllers
 
         public ActionResult ServerError()
         {
+            ViewBag.Title = "Server Error";
+
             const int serverError = (int) HttpStatusCode.InternalServerError;
 
             LogCurrentServerError(serverError);

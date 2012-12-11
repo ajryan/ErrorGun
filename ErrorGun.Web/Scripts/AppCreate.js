@@ -32,11 +32,7 @@ var ErrorGun;
                         var errorMessage = "";
                         try  {
                             var responseJson = JSON.parse(jqXHR.responseText);
-                            var errorMessages = [];
-                            $.each(responseJson.ErrorCodes, function (i, errorCode) {
-                                errorMessages.push(ErrorGun.ErrorCodes.MessageMap[errorCode]);
-                            });
-                            errorMessage = errorMessages.join("\n");
+                            errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(responseJson.ErrorCodes);
                         } catch (error) {
                             errorMessage = "An unexpected server error occurred.";
                         }

@@ -1,25 +1,16 @@
 ﻿@model ErrorGun.Web.Models.ConfirmEmailModel
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>@(Model.Confirmed? "Email Confirmed" : "Email Confirmation Failed")</title>
-    </head>
-    <body>
-        @if (!Model.Confirmed)
+<div class="fourteen columns offset-by-one">
+    @if (!Model.Confirmed)
+    {
+        <span class="warning">Email Confirmation Failed for @(Model.EmailAddress?? "unknown email").</span>
+        <p>Error: @Model.ErrorMessage</p>
+    }
+    else
+    {
+        <p>Email Confirmation Succeeded for @Model.EmailAddress</p>
+        if (Model.AlreadyConfirmed)
         {
-            <span>Email Confirmation Failed: @Model.EmailAddress</span>
-            <span>Error: @Model.ErrorMessage</span>
+            <p>(The address was already confirmed.)</p>
         }
-        else
-        {
-            <span>Email Confirmation Succeeded for @Model.EmailAddress</span>
-             if (Model.AlreadyConfirmed)
-             {
-                 <span>(The address was already confirmed.)</span>
-             }
-        }
-    </body>
-</html>
+    }
+</div>
