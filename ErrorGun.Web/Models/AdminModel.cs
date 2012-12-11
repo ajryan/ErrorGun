@@ -9,7 +9,7 @@ namespace ErrorGun.Web.Models
 {
     public class AdminModel
     {
-        private const int APP_PAGE_SIZE = 10;
+        private const int APP_PAGE_SIZE = 5;
 
         private static readonly string _AdminPassword = ConfigurationManager.AppSettings["AdminPassword"];
 

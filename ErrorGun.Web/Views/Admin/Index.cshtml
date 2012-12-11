@@ -7,7 +7,7 @@
     <head>
         <title>ErrorGun Admin</title>
     </head>
-    <body>
+    <body style="font-family: Consolas">
         <div>
             Message: @Model.Message
         </div>
@@ -22,14 +22,7 @@
             </li>
         </ul>
         <div>
-            <span>Apps:</span>
-            <ul>
-                @foreach (var app in Model.Apps) {
-                    <li>
-                        <span style="white-space: pre-line">@app.ToString()</span>
-                    </li>
-                }
-            </ul>
+            <span>Apps:</span><br/>
             @if (Model.AppPage < 2) {
                 <span>Prev</span>
             }
@@ -43,6 +36,13 @@
             else {
                 <span>Next</span>
             }
+            <ul>
+                @foreach (var app in Model.Apps) {
+                    <li>
+                        <span style="white-space: pre-line">@app.ToString()</span>
+                    </li>
+                }
+            </ul>
         </div>
     </body>
 </html>
