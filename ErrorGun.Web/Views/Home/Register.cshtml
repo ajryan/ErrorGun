@@ -15,17 +15,18 @@
         <label for="emailAddress">Contact Email</label>
         <input type="text" 
                id="emailAddress"
-               data-bind="value: NewContactEmail, valueUpdate: 'afterkeydown', event: { keypress: AddContactEmailOnEnter }"
+               data-bind="value: NewContactEmail, valueUpdate: 'afterkeydown', event: { keypress: AddContactEmailOnEnter }, css: { invalid: NewContactEmailValid() === false }"
                class="inline"/>
-        <button data-bind="click: AddContactEmail, enable: NewContactEmailValid" class="small"><i class="icon-plus"></i> Add</button>
+        <button data-bind="click: AddContactEmail, enable: NewContactEmailValid() && NewContactEmail().length > 0" class="small"><i class="icon-plus"></i> Add</button>
         
         <div class="boxed">
-            <ul data-bind="foreach: ContactEmails">
+            <ul data-bind="template: { name: 'contactemail-template', foreach: ContactEmails }"></ul>
+            <script type="text/html" id="contactemail-template">
                 <li>
                     <button data-bind="click: $root.RemoveContactEmail" class="small"><i class="icon-remove"></i></button>
                     <span data-bind="text: $data"></span>
                 </li>
-            </ul>
+            </script>
         </div>
         <input type="submit" id="registerButton" name="Register" value="Register" />
     </form>

@@ -27,8 +27,12 @@ module ErrorGun {
 
             constructor() {
                 this.NewContactEmailValid = ko.computed(() => {
+                    var newEmail = this.NewContactEmail();
+                    if (newEmail == null || newEmail.length == 0)
+                        return true;
+
                     var emailRegex: RegExp = /^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-                    return emailRegex.test(this.NewContactEmail());
+                    return emailRegex.test(newEmail);
                 });
 
                 this.Create = () => {

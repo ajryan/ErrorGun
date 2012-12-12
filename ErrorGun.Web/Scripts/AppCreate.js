@@ -13,8 +13,12 @@ var ErrorGun;
                 this.ContactEmails = ko.observableArray([]);
                 this.ErrorMessage = ko.observable("");
                 this.NewContactEmailValid = ko.computed(function () {
+                    var newEmail = _this.NewContactEmail();
+                    if(newEmail == null || newEmail.length == 0) {
+                        return true;
+                    }
                     var emailRegex = /^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-                    return emailRegex.test(_this.NewContactEmail());
+                    return emailRegex.test(newEmail);
                 });
                 this.Create = function () {
                     var $regButton = $('#registerButton');
