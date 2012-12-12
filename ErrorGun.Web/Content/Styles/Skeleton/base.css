@@ -353,7 +353,6 @@ input[type="button"] {
     border: 1px solid #666;
     background: #999;
     color: #333;
-    cursor: not-allowed;
     -webkit-text-shadow: none;
     text-shadow: none;
   }

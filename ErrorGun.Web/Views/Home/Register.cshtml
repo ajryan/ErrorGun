@@ -17,12 +17,12 @@
                id="emailAddress"
                data-bind="value: NewContactEmail, valueUpdate: 'afterkeydown', event: { keypress: AddContactEmailOnEnter }"
                class="inline"/>
-        <a data-bind="click: AddContactEmail, enable: NewContactEmail().length > 0" class="button small"><i class="icon-plus"></i> Add</a>
+        <button data-bind="click: AddContactEmail, enable: NewContactEmailValid" class="small"><i class="icon-plus"></i> Add</button>
         
         <div class="boxed">
             <ul data-bind="foreach: ContactEmails">
                 <li>
-                    <a data-bind="click: $root.RemoveContactEmail" class="button small"><i class="icon-remove"></i></a>
+                    <button data-bind="click: $root.RemoveContactEmail" class="small"><i class="icon-remove"></i></button>
                     <span data-bind="text: $data"></span>
                 </li>
             </ul>

@@ -12,6 +12,10 @@ var ErrorGun;
                 this.NewContactEmail = ko.observable("");
                 this.ContactEmails = ko.observableArray([]);
                 this.ErrorMessage = ko.observable("");
+                this.NewContactEmailValid = ko.computed(function () {
+                    var emailRegex = /^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+                    return emailRegex.test(_this.NewContactEmail());
+                });
                 this.Create = function () {
                     var $regButton = $('#registerButton');
                     $regButton.attr('disabled', true);
@@ -33,15 +37,14 @@ var ErrorGun;
                         _this.ErrorMessage(errorMessage);
                         $regButton.removeAttr('disabled');
                     }).done(function (ajaxData) {
-                        $('input').attr('disabled', true);
+                        $('input, button').attr('disabled', true);
                         _this.ErrorMessage("");
                         _this.ApiKey(ajaxData.ApiKey);
                         _this.Id(ajaxData.Id);
                     });
                 };
                 this.AddContactEmail = function () {
-                    var newContactEmail = _this.NewContactEmail();
-                    if(!newContactEmail) {
+                    if(!_this.NewContactEmailValid()) {
                         return;
                     }
                     _this.ContactEmails.push(_this.NewContactEmail());

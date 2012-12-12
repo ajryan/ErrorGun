@@ -16,6 +16,7 @@ module ErrorGun {
             public NewContactEmail = ko.observable("");
             public ContactEmails = ko.observableArray([]);
             public ErrorMessage = ko.observable("");
+            public NewContactEmailValid: KnockoutComputed;
 
             // methods
             public Create: () => void;
@@ -25,6 +26,11 @@ module ErrorGun {
             public toJSON: () => Object;
 
             constructor() {
+                this.NewContactEmailValid = ko.computed(() => {
+                    var emailRegex: RegExp = /^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+                    return emailRegex.test(this.NewContactEmail());
+                });
+
                 this.Create = () => {
                     var $regButton = $('#registerButton');
                     $regButton.attr('disabled', true);
@@ -53,7 +59,7 @@ module ErrorGun {
                     .done((ajaxData) => {
                         // TODO: modal "created" with app details
                         // TODO: ko bindings for disabling everything
-                        $('input').attr('disabled', true);
+                        $('input, button').attr('disabled', true);
                         this.ErrorMessage("");
                         this.ApiKey(ajaxData.ApiKey);
                         this.Id(ajaxData.Id);
@@ -61,8 +67,7 @@ module ErrorGun {
                 }
 
                 this.AddContactEmail = () => {
-                    var newContactEmail: string = this.NewContactEmail();
-                    if (!newContactEmail)
+                    if (!this.NewContactEmailValid())
                         return;
 
                     this.ContactEmails.push(this.NewContactEmail());
