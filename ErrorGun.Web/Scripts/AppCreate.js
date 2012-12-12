@@ -2,18 +2,6 @@
 var ErrorGun;
 (function (ErrorGun) {
     (function (AppCreate) {
-        var ContactEmail = (function () {
-            function ContactEmail(address, focused, canRemove) {
-                if (typeof address === "undefined") { address = ""; }
-                if (typeof focused === "undefined") { focused = false; }
-                if (typeof canRemove === "undefined") { canRemove = true; }
-                this.Address = ko.observable(address);
-                this.Focused = ko.observable(focused);
-                this.CanRemove = ko.observable(canRemove);
-            }
-            return ContactEmail;
-        })();
-        AppCreate.ContactEmail = ContactEmail;        
         var ViewModel = (function () {
             function ViewModel() {
                 var _this = this;
@@ -21,17 +9,12 @@ var ErrorGun;
                 this.ApiKey = ko.observable("");
                 this.CreatedTimestampUtc = ko.observable("");
                 this.Name = ko.observable("");
-                this.ContactEmails = ko.observableArray([
-                    new ContactEmail("", false, false)
-                ]);
+                this.NewContactEmail = ko.observable("");
+                this.ContactEmails = ko.observableArray([]);
                 this.ErrorMessage = ko.observable("");
                 this.Create = function () {
                     var $regButton = $('#registerButton');
                     $regButton.attr('disabled', true);
-                    var removeEmails = $.grep(_this.ContactEmails(), function (item) {
-                        return (item.CanRemove() && !/\S/.test(item.Address()));
-                    });
-                    _this.ContactEmails.removeAll(removeEmails);
                     var json = ko.toJSON(_this);
                     $.ajax({
                         url: "/api/apps",
@@ -57,19 +40,31 @@ var ErrorGun;
                     });
                 };
                 this.AddContactEmail = function () {
-                    _this.ContactEmails.push(new ContactEmail("", true, true));
+                    var newContactEmail = _this.NewContactEmail();
+                    if(!newContactEmail) {
+                        return;
+                    }
+                    _this.ContactEmails.push(_this.NewContactEmail());
+                    _this.NewContactEmail("");
+                    $('#emailAddress').focus();
+                };
+                this.AddContactEmailOnEnter = function (data, event) {
+                    var keyCode = (event.which ? event.which : event.keyCode);
+                    if(keyCode === 13) {
+                        _this.AddContactEmail();
+                        return false;
+                    }
+                    return true;
                 };
                 this.RemoveContactEmail = function (email) {
-                    if(_this.ContactEmails().length > 1) {
-                        _this.ContactEmails.remove(email);
-                    }
+                    _this.ContactEmails.remove(email);
+                    _this.NewContactEmail(email);
+                    $('#emailAddress').focus();
                 };
                 this.toJSON = function () {
                     return {
                         Name: _this.Name(),
-                        ContactEmails: ko.utils.arrayMap(_this.ContactEmails(), function (ce) {
-                            return ce.Address();
-                        })
+                        ContactEmails: _this.ContactEmails()
                     };
                 };
             }

@@ -6,18 +6,6 @@
 module ErrorGun {
     export module AppCreate {
         
-        export class ContactEmail {
-            public Address: KnockoutObservableString; 
-            public Focused: KnockoutObservableBool;
-            public CanRemove: KnockoutObservableBool;
-
-            constructor(address: string = "", focused: bool = false, canRemove: bool = true) {
-                this.Address = ko.observable(address);
-                this.Focused = ko.observable(focused);
-                this.CanRemove= ko.observable(canRemove);
-            }
-        }
-
         export class ViewModel {
 
             // properties
@@ -25,12 +13,14 @@ module ErrorGun {
             public ApiKey = ko.observable("");
             public CreatedTimestampUtc = ko.observable("");
             public Name = ko.observable("");
-            public ContactEmails = ko.observableArray([new ContactEmail("", false, false)]);
+            public NewContactEmail = ko.observable("");
+            public ContactEmails = ko.observableArray([]);
             public ErrorMessage = ko.observable("");
 
             // methods
             public Create: () => void;
             public AddContactEmail: () => void;
+            public AddContactEmailOnEnter: (data, event) => void;
             public RemoveContactEmail: (email) => void;
             public toJSON: () => Object;
 
@@ -38,11 +28,6 @@ module ErrorGun {
                 this.Create = () => {
                     var $regButton = $('#registerButton');
                     $regButton.attr('disabled', true);
-
-                    var removeEmails = $.grep(this.ContactEmails(), (item: ContactEmail) => {
-                        return (item.CanRemove() && !/\S/.test(item.Address()));
-                    });
-                    this.ContactEmails.removeAll(removeEmails);
 
                     var json = ko.toJSON(this);
                     $.ajax({
@@ -76,18 +61,34 @@ module ErrorGun {
                 }
 
                 this.AddContactEmail = () => {
-                    this.ContactEmails.push(new ContactEmail("", true, true));
+                    var newContactEmail: string = this.NewContactEmail();
+                    if (!newContactEmail)
+                        return;
+
+                    this.ContactEmails.push(this.NewContactEmail());
+                    this.NewContactEmail("");
+                    $('#emailAddress').focus();
+                }
+
+                this.AddContactEmailOnEnter = (data, event) => {
+                    var keyCode = (event.which ? event.which : event.keyCode);
+                    if (keyCode === 13) {
+                        this.AddContactEmail();
+                        return false;
+                    }
+                    return true;
                 }
 
                 this.RemoveContactEmail = (email) => {
-                    if (this.ContactEmails().length > 1)
-                        this.ContactEmails.remove(email);
+                    this.ContactEmails.remove(email);
+                    this.NewContactEmail(email);
+                    $('#emailAddress').focus();
                 }
 
                 this.toJSON = () => {
                     return {
                         Name: this.Name(),
-                        ContactEmails: ko.utils.arrayMap(this.ContactEmails(), (ce) => { return ce.Address() })
+                        ContactEmails: this.ContactEmails()
                     };
                 }
             }

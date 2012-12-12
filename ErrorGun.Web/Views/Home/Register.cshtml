@@ -2,35 +2,33 @@
 
 <div class="fourteen columns offset-by-one">
     <h3 class="add-bottom">Register App</h3>
-    <div data-bind="visible: ErrorMessage" style="display: none">
-        <span data-bind="text: ErrorMessage" class="warning"></span>
+    <div data-bind="visible: ErrorMessage, text: ErrorMessage" class="warning alert" style="display: none"></div>
+    <div data-bind="visible: ApiKey" class="info alert" style="display: none">
+        <h5>App Created</h5>
+        <label class="inline">Id:</label> <span data-bind="text: Id"></span><br/>
+        <label class="inline">ApiKey:</label> <span data-bind="text: ApiKey"></span>
     </div>
     <form data-bind="submit: Create">
         <label for="name">App Name</label>
-        <input type="text" id="name" data-bind="value: Name, hasfocus: true" />
-        <div class="fourteen columns clearfix alpha">
-            <div class="three columns alpha">
-                <label for="contact0">Contact Emails</label>
-            </div>
-            <div class="one column omega" style="text-align: right">
-                <a data-bind="click: AddContactEmail" class="button small"><i class="icon-plus-sign"></i></a>
-            </div>
+        <input type="text" id="name" data-bind="value: Name" />
+        
+        <label for="emailAddress">Contact Email</label>
+        <input type="text" 
+               id="emailAddress"
+               data-bind="value: NewContactEmail, valueUpdate: 'afterkeydown', event: { keypress: AddContactEmailOnEnter }"
+               class="inline"/>
+        <a data-bind="click: AddContactEmail, enable: NewContactEmail().length > 0" class="button small"><i class="icon-plus"></i> Add</a>
+        
+        <div class="boxed">
+            <ul data-bind="foreach: ContactEmails">
+                <li>
+                    <a data-bind="click: $root.RemoveContactEmail" class="button small"><i class="icon-remove"></i></a>
+                    <span data-bind="text: $data"></span>
+                </li>
+            </ul>
         </div>
-    
-        <ul data-bind="foreach: ContactEmails">
-            <li>
-                @* TODO: inline-block css *@
-                <input type="text" data-bind="value: Address, hasfocus: Focused, valueUpdate: 'afterkeydown', attr: {id: 'contact' + $index() }" class="remove-bottom" style="display: inline-block"/>
-                <a data-bind="click: $root.RemoveContactEmail, visible: CanRemove" class="button small"><i class="icon-remove-sign"></i></a>
-            </li>
-        </ul>
         <input type="submit" id="registerButton" name="Register" value="Register" />
     </form>
-    <div data-bind="visible: ApiKey" style="display: none">
-        <h2>App Created</h2>
-        Id: <span data-bind="text: Id"></span>
-        ApiKey: <span data-bind="text: ApiKey"></span>
-    </div>
 </div>
 
 @section EndBodyScripts {
@@ -38,5 +36,9 @@
     <script>
         var viewModel = new ErrorGun.AppCreate.ViewModel();
         ko.applyBindings(viewModel);
+
+        $(function () {
+            $('#name').focus();
+        });
     </script>
 }

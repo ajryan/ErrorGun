@@ -374,8 +374,9 @@ input[type="button"] {
   input[type="submit"].small,
   input[type="reset"].small,
   input[type="button"].small {
-    padding: 2px !important;
+    padding: 2px 3px 2px 3px !important;
     margin-bottom: 4px;
+    margin-right: 12px;
   }
 
   /* Fix for odd Mozilla border & padding issues */
