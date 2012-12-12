@@ -17,9 +17,10 @@ namespace ErrorGun.Web.App_Start
                 "~/Scripts/AppCreate.js"));
 
             bundles.Add(new StyleBundle(AppStyle.Skeleton).Include(
-                "~/Content/Skeleton/base.css",
-                "~/Content/Skeleton/skeleton.css",
-                "~/Content/Skeleton/layout.css"));
+                "~/Content/Styles/Skeleton/base.css",
+                "~/Content/Styles/Skeleton/skeleton.css",
+                "~/Content/Styles/icons.css",
+                "~/Content/Styles/layout.css"));
         }
     }
 

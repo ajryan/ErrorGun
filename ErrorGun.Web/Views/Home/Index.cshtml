@@ -2,13 +2,13 @@
     <div class="seven columns alpha">
         <h2>Sign Up</h2>
         <p>Sign up your application now.</p>
-        @Html.ActionLink("Register", "Register", "Home", new { @class = "ko-link large" })
+        @Html.ActionLink("Register", "Register", "Home", htmlAttributes: new { @class = "ko-link large" }, routeValues: null)
     </div>
     
     <div class="seven columns omega">
         <h2>Your App</h2>
         <p>View your existing application.</p>
-        @Html.ActionLink("View", "ViewApp", "Home", new { @class = "ko-link large" })
+        @Html.ActionLink("View", "ViewApp", "Home", htmlAttributes: new { @class = "ko-link large" }, routeValues: null)
     </div>
 </div>
 

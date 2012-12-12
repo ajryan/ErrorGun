@@ -248,10 +248,12 @@
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\Fonts\Forque-webfont.svg" />
     <Content Include="Content\Images\body_bg.png" />
+    <Content Include="Content\Images\glyphicons-halflings.png" />
     <Content Include="Content\Images\logo.png" />
-    <Content Include="Content\Skeleton\base.css" />
-    <Content Include="Content\Skeleton\layout.css" />
-    <Content Include="Content\Skeleton\skeleton.css" />
+    <Content Include="Content\Styles\icons.css" />
+    <Content Include="Content\Styles\Skeleton\base.css" />
+    <Content Include="Content\Styles\layout.css" />
+    <Content Include="Content\Styles\Skeleton\skeleton.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Fonts\Forque-webfont.eot" />
     <Content Include="Content\Fonts\Forque-webfont.ttf" />

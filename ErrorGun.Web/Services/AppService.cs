@@ -104,14 +104,13 @@ namespace ErrorGun.Web.Services
                 if (string.IsNullOrWhiteSpace(appModel.Name))
                     errorCodes.Add(ErrorCode.App_MissingName);
 
-                if (appModel.ContactEmails.Count == 0)
+                var emails = TrimmedEmails(appModel.ContactEmails);
+                if (emails.Count == 0)
                 {
                     errorCodes.Add(ErrorCode.App_MissingContactEmail);
                 }
                 else
                 {
-                    var emails = TrimmedEmails(appModel.ContactEmails);
-
                     if (emails.Any(email => !EmailValidator.Validate(email)))
                         errorCodes.Add(ErrorCode.App_InvalidEmailFormat);
 
@@ -125,7 +124,9 @@ namespace ErrorGun.Web.Services
 
         private static List<string> TrimmedEmails(List<string> emails)
         {
-            return emails.Select(e => e.Trim()).ToList();
+            return emails
+                .Select(e => e.Trim())
+                .Where(e => !String.IsNullOrEmpty(e)).ToList();
         }
     }
 }

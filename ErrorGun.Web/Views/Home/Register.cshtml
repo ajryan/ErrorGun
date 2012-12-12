@@ -10,17 +10,18 @@
         <input type="text" id="name" data-bind="value: Name, hasfocus: true" />
         <div class="fourteen columns clearfix alpha">
             <div class="three columns alpha">
-                <label for="">Contact Emails</label>
+                <label for="contact0">Contact Emails</label>
             </div>
-            <div class="three columns omega">
-                <a data-bind="click: AddContactEmail" class="ko-link">Add Contact</a>
+            <div class="one column omega" style="text-align: right">
+                <a data-bind="click: AddContactEmail" class="button small"><i class="icon-plus-sign"></i></a>
             </div>
         </div>
     
         <ul data-bind="foreach: ContactEmails">
             <li>
-                <input type="text" data-bind="value: Address, hasfocus: Focused" class="remove-bottom" style="display: inline-block"/>
-                <a data-bind="click: $root.RemoveContactEmail" class="ko-link">[X]</a>
+                @* TODO: inline-block css *@
+                <input type="text" data-bind="value: Address, hasfocus: Focused, valueUpdate: 'afterkeydown', attr: {id: 'contact' + $index() }" class="remove-bottom" style="display: inline-block"/>
+                <a data-bind="click: $root.RemoveContactEmail, visible: CanRemove" class="button small"><i class="icon-remove-sign"></i></a>
             </li>
         </ul>
         <input type="submit" id="registerButton" name="Register" value="Register" />
@@ -35,7 +36,7 @@
 @section EndBodyScripts {
     @Scripts.Render(AppScript.HomeRegister)
     <script>
-        var viewModel = new ErrorGun.AppCreate.ViewModel('@Url.Action("AppComplete")');
+        var viewModel = new ErrorGun.AppCreate.ViewModel();
         ko.applyBindings(viewModel);
     </script>
 }

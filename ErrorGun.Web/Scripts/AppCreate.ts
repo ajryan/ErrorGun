@@ -5,15 +5,27 @@
 
 module ErrorGun {
     export module AppCreate {
+        
+        export class ContactEmail {
+            public Address: KnockoutObservableString; 
+            public Focused: KnockoutObservableBool;
+            public CanRemove: KnockoutObservableBool;
+
+            constructor(address: string = "", focused: bool = false, canRemove: bool = true) {
+                this.Address = ko.observable(address);
+                this.Focused = ko.observable(focused);
+                this.CanRemove= ko.observable(canRemove);
+            }
+        }
+
         export class ViewModel {
-            // TODO: ErrorMessage to array
 
             // properties
             public Id = ko.observable("");
             public ApiKey = ko.observable("");
             public CreatedTimestampUtc = ko.observable("");
             public Name = ko.observable("");
-            public ContactEmails = ko.observableArray([{Address: ko.observable(""), Focused: false}]);
+            public ContactEmails = ko.observableArray([new ContactEmail("", false, false)]);
             public ErrorMessage = ko.observable("");
 
             // methods
@@ -22,17 +34,15 @@ module ErrorGun {
             public RemoveContactEmail: (email) => void;
             public toJSON: () => Object;
 
-            // fields
-            private _completeUrl: string;
-
-            constructor(completeUrl: string) {
-                this._completeUrl = completeUrl;
-
+            constructor() {
                 this.Create = () => {
                     var $regButton = $('#registerButton');
-
-                    this.ErrorMessage("");
                     $regButton.attr('disabled', true);
+
+                    var removeEmails = $.grep(this.ContactEmails(), (item: ContactEmail) => {
+                        return (item.CanRemove() && !/\S/.test(item.Address()));
+                    });
+                    this.ContactEmails.removeAll(removeEmails);
 
                     var json = ko.toJSON(this);
                     $.ajax({
@@ -59,17 +69,14 @@ module ErrorGun {
                         // TODO: modal "created" with app details
                         // TODO: ko bindings for disabling everything
                         $('input').attr('disabled', true);
+                        this.ErrorMessage("");
                         this.ApiKey(ajaxData.ApiKey);
                         this.Id(ajaxData.Id);
                     });
                 }
 
                 this.AddContactEmail = () => {
-                    var contactCount = this.ContactEmails().length;
-                    if (this.ContactEmails()[contactCount - 1].Address() === '') {
-                        return false;
-                    }
-                    this.ContactEmails.push({Address: ko.observable(""), Focused: true});
+                    this.ContactEmails.push(new ContactEmail("", true, true));
                 }
 
                 this.RemoveContactEmail = (email) => {
