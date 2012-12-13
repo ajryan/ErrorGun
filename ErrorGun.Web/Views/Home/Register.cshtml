@@ -5,15 +5,23 @@
     <div data-bind="visible: ErrorMessage, text: ErrorMessage" class="warning alert" style="display: none"></div>
     <div data-bind="visible: ApiKey" class="info alert" style="display: none">
         <h5>App Created</h5>
+        <hr/>
+        <label class="inline">Name:</label> <span data-bind="text: Name"></span><br/>
         <label class="inline">Id:</label> <span data-bind="text: Id"></span><br/>
         <label class="inline">ApiKey:</label> <span data-bind="text: ApiKey"></span>
+        <label>Contact Emails:</label>
+        <ul data-bind="foreach: ContactEmails"><li data-bind="text: $data"></li></ul>
+        <p>
+            Store your API key in a secure location. It is required for reporting errors to the service.
+            See <a href="examples">examples</a> of using the ErrorGun API from your favorite platform.
+        </p>
     </div>
-    <form data-bind="submit: Create">
+    <form data-bind="submit: Create, visible: !ApiKey()">
         <label for="name">App Name</label>
         <input type="text" id="name" data-bind="value: Name" />
         
         <label for="emailAddress">Contact Email</label>
-        <input type="text" 
+        <input type="email" 
                id="emailAddress"
                data-bind="value: NewContactEmail, valueUpdate: 'afterkeydown', event: { keypress: AddContactEmailOnEnter }, css: { invalid: NewContactEmailValid() === false }"
                class="inline"/>

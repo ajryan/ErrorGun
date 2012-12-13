@@ -181,10 +181,9 @@ blockquote {
     }
 
 hr {
-  border: solid #d7d98c;
+  border: solid #ced06e;
   border-width: 1px 0 0;
-  clear: both;
-  margin: 10px 0 30px;
+  margin: 10px 10px 10px 0;
   height: 0;
 }
 
