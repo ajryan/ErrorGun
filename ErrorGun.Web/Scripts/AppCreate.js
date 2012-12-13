@@ -23,6 +23,7 @@ var ErrorGun;
                 this.Create = function () {
                     var $regButton = $('#registerButton');
                     $regButton.attr('disabled', true);
+                    _this.NewContactEmail("");
                     var json = ko.toJSON(_this);
                     $.ajax({
                         url: "/api/apps",

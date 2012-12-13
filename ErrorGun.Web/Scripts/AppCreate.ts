@@ -38,6 +38,7 @@ module ErrorGun {
                 this.Create = () => {
                     var $regButton = $('#registerButton');
                     $regButton.attr('disabled', true);
+                    this.NewContactEmail("");
 
                     var json = ko.toJSON(this);
                     $.ajax({

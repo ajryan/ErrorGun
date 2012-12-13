@@ -28,6 +28,8 @@
         <button data-bind="click: AddContactEmail, enable: NewContactEmailValid() && NewContactEmail().length > 0" class="small"><i class="icon-plus"></i> Add</button>
         
         <div class="boxed">
+            <strong>Contact Emails</strong><br/>
+            <em data-bind="visible: ContactEmails().length < 1">Please add at least one.</em>
             <ul data-bind="template: { name: 'contactemail-template', foreach: ContactEmails }"></ul>
             <script type="text/html" id="contactemail-template">
                 <li>
