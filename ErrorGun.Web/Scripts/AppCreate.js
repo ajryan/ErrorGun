@@ -13,6 +13,7 @@ var ErrorGun;
                 var _this = this;
                         _super.call(this);
                 this.NewContactEmail = ko.observable("");
+                this.Working = ko.observable(false);
                 this.NewContactEmailValid = ko.computed(function () {
                     var newEmail = _this.NewContactEmail();
                     if(newEmail == null || newEmail.length == 0) {
@@ -22,8 +23,7 @@ var ErrorGun;
                     return emailRegex.test(newEmail);
                 });
                 this.Create = function () {
-                    var $regButton = $('#registerButton');
-                    $regButton.attr('disabled', true);
+                    _this.Working(true);
                     _this.NewContactEmail("");
                     var json = ko.toJSON(_this);
                     $.ajax({
@@ -35,12 +35,12 @@ var ErrorGun;
                     }).fail(function (jqXHR, textStatus) {
                         var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
                         _this.ErrorMessage(errorMessage);
-                        $regButton.removeAttr('disabled');
                     }).done(function (ajaxData) {
-                        $('input, button').attr('disabled', true);
                         _this.ErrorMessage("");
                         _this.ApiKey(ajaxData.ApiKey);
                         _this.Id(ajaxData.Id);
+                    }).always(function () {
+                        _this.Working(false);
                     });
                 };
                 this.AddContactEmail = function () {

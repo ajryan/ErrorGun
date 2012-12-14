@@ -11,6 +11,7 @@ module ErrorGun {
 
             // properties
             public NewContactEmail = ko.observable("");
+            public Working = ko.observable(false);
             public NewContactEmailValid: KnockoutComputed;
 
             // methods
@@ -33,8 +34,7 @@ module ErrorGun {
                 });
 
                 this.Create = () => {
-                    var $regButton = $('#registerButton');
-                    $regButton.attr('disabled', true);
+                    this.Working(true);
                     this.NewContactEmail("");
 
                     var json = ko.toJSON(this);
@@ -48,14 +48,16 @@ module ErrorGun {
                     .fail((jqXHR, textStatus) => {
                         var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
                         this.ErrorMessage(errorMessage);
-                        $regButton.removeAttr('disabled');
                     })
                     .done((ajaxData) => {
-                        $('input, button').attr('disabled', true);
                         this.ErrorMessage("");
                         this.ApiKey(ajaxData.ApiKey);
                         this.Id(ajaxData.Id);
+                    })
+                    .always(() => {
+                        this.Working(false);
                     });
+                    
                 }
 
                 this.AddContactEmail = () => {

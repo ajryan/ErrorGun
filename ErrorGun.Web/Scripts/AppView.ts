@@ -12,6 +12,7 @@ module ErrorGun {
             // properties
             public ApiKey = ko.observable("");
             public AppLoaded = ko.observable(false);
+            public Working = ko.observable(false);
             public ReportedErrorId = ko.observable("");
             public ContactEmailsFlat: KnockoutComputed;
             public ErrorMessageSend = ko.observable("");

@@ -13,6 +13,7 @@ var ErrorGun;
                         _super.call(this);
                 this.ApiKey = ko.observable("");
                 this.AppLoaded = ko.observable(false);
+                this.Working = ko.observable(false);
                 this.ReportedErrorId = ko.observable("");
                 this.ErrorMessageSend = ko.observable("");
                 this.Message = ko.observable("");

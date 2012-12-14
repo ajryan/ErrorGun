@@ -169,6 +169,15 @@ textarea.wide {
   margin-right: 20px;
 }
 
+.button.loading,
+button.loading,
+input[type="submit"].loading,
+input[type="reset"].loading,
+input[type="button"].loading {
+  background: #999 url('/Content/Images/ajax-loader.gif') no-repeat 4% center;
+  padding-left: 22px;
+}
+
 /* == BOXED LIST == */
 
 div.boxed

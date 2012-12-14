@@ -248,6 +248,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\Fonts\Forque-webfont.svg" />
+    <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\Images\body_bg.png" />
     <Content Include="Content\Images\glyphicons-halflings.png" />
     <Content Include="Content\Images\logo.png" />

@@ -27,6 +27,7 @@
                data-bind="value: NewContactEmail, valueUpdate: 'afterkeydown', event: { keypress: AddContactEmailOnEnter }, css: { invalid: NewContactEmailValid() === false }"
                class="inline"/>
         <button data-bind="click: AddContactEmail, enable: NewContactEmailValid() && NewContactEmail().length > 0" class="small"><i class="icon-plus"></i> Add</button>
+
         
         <div class="boxed">
             <strong>Contact Emails</strong><br/>
@@ -39,7 +40,9 @@
                 </li>
             </script>
         </div>
-        <input type="submit" id="registerButton" name="Register" value="Register" />
+        <button type="submit" id="registerButton" name="Register" value="Register" data-bind="disable: Working, css: { loading: Working }">
+            Register
+        </button>
     </form>
 </div>
 
