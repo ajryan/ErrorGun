@@ -1,17 +1,18 @@
 "use strict";
+var __extends = this.__extends || function (d, b) {
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var ErrorGun;
 (function (ErrorGun) {
-    (function (AppCreate) {
-        var ViewModel = (function () {
-            function ViewModel() {
+    (function (ViewModels) {
+        var AppCreate = (function (_super) {
+            __extends(AppCreate, _super);
+            function AppCreate() {
                 var _this = this;
-                this.Id = ko.observable("");
-                this.ApiKey = ko.observable("");
-                this.CreatedTimestampUtc = ko.observable("");
-                this.Name = ko.observable("");
+                        _super.call(this);
                 this.NewContactEmail = ko.observable("");
-                this.ContactEmails = ko.observableArray([]);
-                this.ErrorMessage = ko.observable("");
                 this.NewContactEmailValid = ko.computed(function () {
                     var newEmail = _this.NewContactEmail();
                     if(newEmail == null || newEmail.length == 0) {
@@ -32,13 +33,7 @@ var ErrorGun;
                         dataType: "json",
                         data: json
                     }).fail(function (jqXHR, textStatus) {
-                        var errorMessage = "";
-                        try  {
-                            var responseJson = JSON.parse(jqXHR.responseText);
-                            errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(responseJson.ErrorCodes);
-                        } catch (error) {
-                            errorMessage = "An unexpected server error occurred.";
-                        }
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
                         _this.ErrorMessage(errorMessage);
                         $regButton.removeAttr('disabled');
                     }).done(function (ajaxData) {
@@ -76,9 +71,9 @@ var ErrorGun;
                     };
                 };
             }
-            return ViewModel;
-        })();
-        AppCreate.ViewModel = ViewModel;        
-    })(ErrorGun.AppCreate || (ErrorGun.AppCreate = {}));
-    var AppCreate = ErrorGun.AppCreate;
+            return AppCreate;
+        })(ViewModels.App);
+        ViewModels.AppCreate = AppCreate;        
+    })(ErrorGun.ViewModels || (ErrorGun.ViewModels = {}));
+    var ViewModels = ErrorGun.ViewModels;
 })(ErrorGun || (ErrorGun = {}));

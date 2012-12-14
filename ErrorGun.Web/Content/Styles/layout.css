@@ -29,6 +29,9 @@
 
 /* #Site Styles
 ================================================== */
+
+/* == MASTER == */
+
 body {
     background-image: url('/Content/Images/body_bg.png');
     background-repeat: repeat;
@@ -97,6 +100,8 @@ body {
     text-decoration: underline;
   }
 
+/* == ALERT == */
+
 .alert {
     display: block;
     -moz-border-radius: 4px;
@@ -117,15 +122,7 @@ body {
       border: #71b271 1px solid;
   }
 
-a.ko-link {
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-    color: #1e9461;
-}
-    a.ko-link:hover {
-        text-decoration: underline;
-    }
+/* == FORMS == */
 
 .form-inline input,
 .form-inline textarea,
@@ -163,9 +160,15 @@ input.invalid {
     box-shadow: 0 0 4px rgba(255,0,0,.4);
   }
 
+input.wide {
+  width: 300px;
+}
+
+/* == BOXED LIST == */
+
 div.boxed
 {
-  background: hsl(60, 60%, 85%);
+  background: #f0f0c2;
   padding: 2px 6px 2px 6px;
   border: #cdcd4d 1px solid;
   margin: auto 20px 20px auto;
@@ -192,6 +195,69 @@ div.boxed ul li
     margin: 0;
   }
 
+/* == TABLES == */
+
+table {
+	/*width: 100%;*/
+	border-collapse: collapse;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+table th, table td {
+	padding: 10px 10px 9px;
+	font-size: 13px;
+	line-height: 18px;
+	text-align: left;
+}
+
+table td {
+	vertical-align: top;
+	border-top: solid 1px #e5e59d;
+}
+
+table th {
+	padding-top: 9px;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+table.condensed th, table.condensed td {
+	padding: 5px 5px 4px;
+}
+
+table.bordered {
+  background: #f0f0c2;
+	border-collapse: separate;
+	border: solid 1px #cdcd4d;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+table.bordered th + th,
+table.bordered th + td,
+table.bordered td + td {
+	border-left: solid 1px #cdcd4d;
+}
+
+table.header-column tbody tr td:first-child {
+  font-weight: bold;
+  text-align: right;
+}
+
+/* == MISC ==*/
+
+a.ko-link {
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    color: #1e9461;
+}
+    a.ko-link:hover {
+        text-decoration: underline;
+    }
+
 /* #Media Queries
 ================================================== */
 
@@ -203,9 +269,33 @@ div.boxed ul li
         @media only screen and (min-width: 768px) and (max-width: 959px) {}
     */
 
-	/* All Mobile Sizes (devices and browser) 
-        @media only screen and (max-width: 767px) { }
-    */
+	/* All Mobile Sizes (devices and browser)  */
+@media only screen and (max-width: 767px) {
+      
+  .form-inline input,
+  .form-inline textarea,
+  .form-inline select,
+  .form-inline button {
+    display: block;
+    *display: block;
+    margin-bottom: 20px;
+    vertical-align: middle;
+  }
+
+  .form-inline label {
+    display: block;
+  }
+
+  .form-inline button {
+    padding: 8px 10px;
+    margin-top: 0;
+  }
+
+  input.wide {
+    width: 210px;
+  }
+
+}
 
 	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) 
         @media only screen and (min-width: 480px) and (max-width: 767px) {}

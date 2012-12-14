@@ -16,6 +16,20 @@ namespace ErrorGun.Web.App_Start
                 "~/Scripts/ErrorCodes.js",
                 "~/Scripts/AppCreate.js"));
 
+            bundles.Add(new ScriptBundle(AppScript.HomeRegister).Include(
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/knockout-{version}.js",
+                "~/Scripts/ErrorCodes.js",
+                "~/Scripts/App.js",
+                "~/Scripts/AppCreate.js"));
+
+            bundles.Add(new ScriptBundle(AppScript.HomeView).Include(
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/knockout-{version}.js",
+                "~/Scripts/ErrorCodes.js",
+                "~/Scripts/App.js",
+                "~/Scripts/AppView.js"));
+
             bundles.Add(new StyleBundle(AppStyle.Skeleton).Include(
                 "~/Content/Styles/Skeleton/base.css",
                 "~/Content/Styles/Skeleton/skeleton.css",
@@ -29,6 +43,7 @@ namespace ErrorGun.Web.App_Start
         public const string JQuery = "~/bundles/jquery";
         public const string Knockout = "~/bundles/knockout";
         public const string HomeRegister = "~/bundles/home_register";
+        public const string HomeView = "~/bundles/home_view";
     }
 
     public static class AppStyle

@@ -23,7 +23,7 @@ namespace ErrorGun.Web.Services
             {
                 // load app
                 App app = null;
-                if (!String.IsNullOrWhiteSpace(errorReport.AppId))
+                if (errorReport != null && !String.IsNullOrWhiteSpace(errorReport.AppId))
                 {
                     app = session
                         .Include<App>(a => a.ContactEmailIds)
@@ -71,26 +71,33 @@ namespace ErrorGun.Web.Services
         {
             var errorCodes = new List<ErrorCode>();
 
-            if (String.IsNullOrWhiteSpace(errorReport.AppId))
-                errorCodes.Add(ErrorCode.ErrorReport_MissingAppId);
-
-            if (app == null)
+            if (errorReport == null)
             {
-                errorCodes.Add(ErrorCode.ErrorReport_AppDoesNotExist);
+                errorCodes.Add(ErrorCode.ErrorReport_MissingErrorReport);
             }
             else
             {
-                if (!String.Equals(app.ApiKey, apiKey, StringComparison.Ordinal))
-                    errorCodes.Add(ErrorCode.ErrorReport_InvalidApiKey);
-            }
+                if (String.IsNullOrWhiteSpace(errorReport.AppId))
+                    errorCodes.Add(ErrorCode.ErrorReport_MissingAppId);
 
-            if (String.IsNullOrWhiteSpace(errorReport.Message))
-                errorCodes.Add(ErrorCode.ErrorReport_MissingMessage);
+                if (app == null)
+                {
+                    errorCodes.Add(ErrorCode.ErrorReport_AppDoesNotExist);
+                }
+                else
+                {
+                    if (!String.Equals(app.ApiKey, apiKey, StringComparison.Ordinal))
+                        errorCodes.Add(ErrorCode.ErrorReport_InvalidApiKey);
+                }
 
-            if (!String.IsNullOrWhiteSpace(errorReport.UserEmail) &&
-                !EmailValidator.Validate(errorReport.UserEmail))
-            {
-                errorCodes.Add(ErrorCode.ErrorReport_InvalidUserEmail);
+                if (String.IsNullOrWhiteSpace(errorReport.Message))
+                    errorCodes.Add(ErrorCode.ErrorReport_MissingMessage);
+
+                if (!String.IsNullOrWhiteSpace(errorReport.UserEmail) &&
+                    !EmailValidator.Validate(errorReport.UserEmail))
+                {
+                    errorCodes.Add(ErrorCode.ErrorReport_InvalidUserEmail);
+                }
             }
 
             if (errorCodes.Count > 0)

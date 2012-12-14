@@ -91,6 +91,38 @@ namespace ErrorGun.Web.Services
             }
         }
 
+        public AppModel LoadApp(string apiKey)
+        {
+            if (String.IsNullOrWhiteSpace(apiKey))
+                throw new ServiceValidationException(ErrorCode.App_MissingApiKey);
+
+            using (var session = _documentStore.OpenSession())
+            {
+                var loadedApp = session
+                    .Query<App>()
+                    .Include<App>(a => a.ContactEmailIds)
+                    .Where(app => app.ApiKey == apiKey)
+                    .SingleOrDefault();
+
+                if (loadedApp == null)
+                    throw new ServiceValidationException(ErrorCode.ErrorReport_AppDoesNotExist);
+
+                var emails = session
+                    .Load<ContactEmail>(loadedApp.ContactEmailIds)
+                    .Select(ce => ce.EmailAddress)
+                    .ToList();
+
+                return new AppModel
+                {
+                    Id = loadedApp.Id,
+                    Name = loadedApp.Name,
+                    ApiKey = loadedApp.ApiKey,
+                    CreatedTimestampUtc = loadedApp.CreatedTimestampUtc,
+                    ContactEmails = emails
+                };
+            }
+        }
+
         private static void ThrowOnInvalidAppModel(AppModel appModel)
         {
             var errorCodes = new List<ErrorCode>();

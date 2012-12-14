@@ -1,21 +1,16 @@
 /// <reference path="knockout-2.2.d.ts" />
 /// <reference path="jquery-1.8.d.ts" />
 /// <reference path="ErrorCodes.ts" />
+/// <reference path="App.ts" />
 "use strict";
 
 module ErrorGun {
-    export module AppCreate {
+    export module ViewModels {
         
-        export class ViewModel {
+        export class AppCreate extends App {
 
             // properties
-            public Id = ko.observable("");
-            public ApiKey = ko.observable("");
-            public CreatedTimestampUtc = ko.observable("");
-            public Name = ko.observable("");
             public NewContactEmail = ko.observable("");
-            public ContactEmails = ko.observableArray([]);
-            public ErrorMessage = ko.observable("");
             public NewContactEmailValid: KnockoutComputed;
 
             // methods
@@ -26,6 +21,8 @@ module ErrorGun {
             public toJSON: () => Object;
 
             constructor() {
+                super();
+
                 this.NewContactEmailValid = ko.computed(() => {
                     var newEmail = this.NewContactEmail();
                     if (newEmail == null || newEmail.length == 0)
@@ -49,21 +46,11 @@ module ErrorGun {
                         data: json
                     })
                     .fail((jqXHR, textStatus) => {
-                        var errorMessage = "";
-                        try {
-                            // attempt to parse out our custom errorcode
-                            var responseJson = JSON.parse(jqXHR.responseText);
-                            errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(responseJson.ErrorCodes);
-                        }
-                        catch (error) {
-                            errorMessage = "An unexpected server error occurred.";
-                        }
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
                         this.ErrorMessage(errorMessage);
                         $regButton.removeAttr('disabled');
                     })
                     .done((ajaxData) => {
-                        // TODO: modal "created" with app details
-                        // TODO: ko bindings for disabling everything
                         $('input, button').attr('disabled', true);
                         this.ErrorMessage("");
                         this.ApiKey(ajaxData.ApiKey);

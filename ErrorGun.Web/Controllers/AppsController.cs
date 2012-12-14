@@ -30,5 +30,14 @@ namespace ErrorGun.Web.Controllers
 
             return response;
         }
+
+        public HttpResponseMessage Get(string apiKey)
+        {
+            // TODO: unit test this plus the service method itself
+
+            var app = _appService.LoadApp(apiKey);
+            var response = Request.CreateResponse(HttpStatusCode.OK, app);
+            return response;
+        }
     }
 }

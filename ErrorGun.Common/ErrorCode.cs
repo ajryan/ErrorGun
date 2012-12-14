@@ -7,6 +7,8 @@ namespace ErrorGun.Common
     // ReSharper disable InconsistentNaming
     public enum ErrorCode
     {
+        App_MissingApiKey,
+        App_AppDoesNotExist,
         App_MissingAppModel,
         App_MissingName,
         App_MissingContactEmail,
@@ -18,6 +20,7 @@ namespace ErrorGun.Common
         ErrorReport_InvalidApiKey,
         ErrorReport_MissingMessage,
         ErrorReport_InvalidUserEmail,
+        ErrorReport_MissingErrorReport,
 
         ConfirmEmail_EmailDoesNotExist
     }

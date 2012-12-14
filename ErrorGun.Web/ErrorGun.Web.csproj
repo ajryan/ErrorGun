@@ -216,6 +216,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Filters\ForwardAwareRequireHttpsAttribute.cs" />
     <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Raven\AppsByApiKey.cs" />
     <Compile Include="Raven\DocumentStoreExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -259,10 +260,24 @@
     <Content Include="Content\Fonts\Forque-webfont.ttf" />
     <Content Include="Content\Fonts\Forque-webfont.woff" />
     <None Include="Properties\PublishProfiles\LocalWebDeploy.pubxml" />
+    <TypeScriptCompile Include="Scripts\App.ts" />
+    <Content Include="Scripts\App.js">
+      <DependentUpon>App.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\App.min.js">
+      <DependentUpon>App.ts</DependentUpon>
+    </Content>
     <Content Include="Scripts\AppCreate.min.js.map">
       <DependentUpon>AppCreate.js</DependentUpon>
     </Content>
     <None Include="Scripts\knockout-2.2.d.ts" />
+    <TypeScriptCompile Include="Scripts\AppView.ts" />
+    <Content Include="Scripts\AppView.js">
+      <DependentUpon>AppView.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\AppView.min.js">
+      <DependentUpon>AppView.ts</DependentUpon>
+    </Content>
     <Content Include="Views\Shared\_Skeleton.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <TypeScriptCompile Include="Scripts\ErrorCodes.ts" />

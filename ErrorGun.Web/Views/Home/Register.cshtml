@@ -44,8 +44,8 @@
 
 @section EndBodyScripts {
     @Scripts.Render(AppScript.HomeRegister)
-    <script>
-        var viewModel = new ErrorGun.AppCreate.ViewModel();
+    <script type="text/javascript">
+        var viewModel = new ErrorGun.ViewModels.AppCreate();
         ko.applyBindings(viewModel);
 
         $(function () {

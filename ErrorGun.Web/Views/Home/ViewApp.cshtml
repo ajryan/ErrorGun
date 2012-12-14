@@ -1,8 +1,65 @@
-﻿<div class="fourteen columns offset-by-one">
+﻿@using ErrorGun.Web.App_Start
+<div class="fourteen columns offset-by-one">
     <h3>Your Application</h3>
-    <form class="form-inline">
+    <div data-bind="visible: ErrorMessage, text: ErrorMessage" class="warning alert" style="display: none"></div>
+    <form class="form-inline" data-bind="submit: LoadApp" autocomplete="off">
         <label for="apiKey">API Key: </label>
-        <input type="text" id="apiKey"/>
-        <button name="Load" value="Load">Load</button>
+        <input type="text" id="apiKey" data-bind="value: ApiKey" class="wide" autocomplete="off" />
+        <button type="submit" name="Load" value="Load">Load</button>
     </form>
+    <div data-bind="visible: AppLoaded" style="display: none">
+        <div class="boxed">
+            <ul>
+                <li><strong>ID: </strong><span data-bind="text: Id"></span></li>
+                <li><strong>Name: </strong><span data-bind="text: Name"></span></li>
+                <li><strong>API Key: </strong><span data-bind="text: ApiKey"></span></li>
+                <li><strong>Created: </strong><span data-bind="text: new Date(CreatedTimestampUtc())"></span></li>
+                <li><strong>Contact Emails: </strong><span data-bind="text: ContactEmailsFlat()"></span></li>
+            </ul>
+        </div>
+        <div class="boxed" data-bind="visible: AppLoaded">
+            <h4>Send Test Error Report</h4>
+            <form data-bind="submit: SendTestErrorReport">
+                <div class="fourteen columns alpha clearfix">
+                    <div class="four columns alpha">
+                        <label for="message">Message</label>
+                        <input data-bind="value: Message" type="text" id="message" />
+                
+                        <label for="category">Category</label>
+                        <input data-bind="value: Category" type="text" id="category" />
+                
+                        <label for="source">Source</label>
+                        <input data-bind="value: Source" type="text" id="source" />
+                
+                        <label for="userEmail">User Email</label>
+                        <input data-bind="value: UserEmail" type="text" id="userEmail" />
+                    </div>
+                    <div class="ten columns omega">
+                        <label for="detail">Detail</label>
+                        <textarea data-bind="value: Detail" id="detail" rows="14" class="eight columns clearfix"></textarea>
+                    </div>
+                </div>
+                <button data-bind="click: ClearErrorReport" name="Clear" value="Clear" class="remove-bottom"><i class="icon-repeat"></i> Clear</button>
+                <button type="submit" name="Send" value="Send" class="remove-bottom"><i class="icon-share-alt"></i> Send</button>
+            </form>
+            <div data-bind="visible: ReportedErrorId" style="display: none">
+                Error successfully reported: <span data-bind="text: ReportedErrorId"></span>
+            </div>
+            <div data-bind="visible: ErrorMessageSend" style="display: none">
+                Failed to send report: <span data-bind="text: ErrorMessageSend"></span>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section EndBodyScripts {
+    @Scripts.Render(AppScript.HomeView)
+    <script type="text/javascript">
+        var viewModel = new ErrorGun.ViewModels.AppView();
+        ko.applyBindings(viewModel);
+
+        $(function () {
+            $('#apiKey').focus();
+        });
+    </script>
+}
