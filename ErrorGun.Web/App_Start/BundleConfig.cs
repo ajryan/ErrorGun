@@ -15,6 +15,7 @@ namespace ErrorGun.Web.App_Start
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/ErrorCodes.js",
+                "~/Scripts/App.js",
                 "~/Scripts/AppCreate.js"));
 
             bundles.Add(new ScriptBundle(AppScript.HomeView).Include(
