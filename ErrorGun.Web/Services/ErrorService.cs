@@ -56,7 +56,7 @@ namespace ErrorGun.Web.Services
 
                 if (emailsToContact.Count > 0)
                 {
-                    _emailService.SendErrorReports(app, errorReport, emailsToContact);
+                    _emailService.SendErrorReports(app, errorReportToStore, emailsToContact);
                 }
                 else
                 {

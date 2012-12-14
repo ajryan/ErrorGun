@@ -14,12 +14,14 @@ module ErrorGun {
             public ReportedErrorId = ko.observable("");
             public ContactEmailsFlat: KnockoutComputed;
             public ErrorMessageSend = ko.observable("");
-
             public Message = ko.observable("");
             public Detail = ko.observable("");
             public Category = ko.observable("");
             public Source = ko.observable("");
             public UserEmail = ko.observable("");
+
+            // fields
+            private _loadedApiKey: string;
 
             // methods
             public LoadApp: () => void;
@@ -34,6 +36,9 @@ module ErrorGun {
                 });
 
                 this.LoadApp = () => {
+                    if (this._loadedApiKey === this.ApiKey())
+                        return;
+
                     this.AppLoaded(false);
 
                     $.getJSON(
@@ -45,6 +50,7 @@ module ErrorGun {
                         this.ErrorMessage(errorMessage);
                     })
                     .done((ajaxData) => {
+                        this._loadedApiKey = ajaxData.ApiKey;
                         this.Id(ajaxData.Id);
                         this.Name(ajaxData.Name);
                         this.CreatedTimestampUtc(ajaxData.CreatedTimestampUtc);

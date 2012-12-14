@@ -24,6 +24,9 @@ var ErrorGun;
                     return _this.ContactEmails().join(", ");
                 });
                 this.LoadApp = function () {
+                    if(_this._loadedApiKey === _this.ApiKey()) {
+                        return;
+                    }
                     _this.AppLoaded(false);
                     $.getJSON('/api/apps', {
                         apiKey: _this.ApiKey()
@@ -31,6 +34,7 @@ var ErrorGun;
                         var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
                         _this.ErrorMessage(errorMessage);
                     }).done(function (ajaxData) {
+                        _this._loadedApiKey = ajaxData.ApiKey;
                         _this.Id(ajaxData.Id);
                         _this.Name(ajaxData.Name);
                         _this.CreatedTimestampUtc(ajaxData.CreatedTimestampUtc);

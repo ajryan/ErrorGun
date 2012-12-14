@@ -164,6 +164,11 @@ input.wide {
   width: 300px;
 }
 
+textarea.wide {
+  width: 90%;
+  margin-right: 20px;
+}
+
 /* == BOXED LIST == */
 
 div.boxed
@@ -175,6 +180,9 @@ div.boxed
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
+  -moz-box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
+  -webkit-box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
+  box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
 }
 
 div.boxed ul {
@@ -198,7 +206,6 @@ div.boxed ul li
 /* == TABLES == */
 
 table {
-	/*width: 100%;*/
 	border-collapse: collapse;
   margin-right: 20px;
   margin-bottom: 20px;
@@ -226,14 +233,18 @@ table.condensed th, table.condensed td {
 	padding: 5px 5px 4px;
 }
 
-table.bordered {
-  background: #f0f0c2;
-	border-collapse: separate;
-	border: solid 1px #cdcd4d;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-}
+  table.bordered
+  {
+    background: #f0f0c2;
+    border-collapse: separate;
+    border: solid 1px #cdcd4d;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
+    -webkit-box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
+    box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
+  }
 
 table.bordered th + th,
 table.bordered th + td,
@@ -291,7 +302,8 @@ a.ko-link {
     margin-top: 0;
   }
 
-  input.wide {
+  input.wide,
+  textarea.wide {
     width: 210px;
   }
 

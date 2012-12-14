@@ -278,6 +278,8 @@
     <Content Include="Scripts\AppView.min.js">
       <DependentUpon>AppView.ts</DependentUpon>
     </Content>
+    <Content Include="Scripts\json2.js" />
+    <Content Include="Scripts\json2.min.js" />
     <Content Include="Views\Shared\_Skeleton.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <TypeScriptCompile Include="Scripts\ErrorCodes.ts" />

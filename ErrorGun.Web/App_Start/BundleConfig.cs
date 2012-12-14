@@ -11,19 +11,14 @@ namespace ErrorGun.Web.App_Start
             bundles.Add(new ScriptBundle(AppScript.Knockout).Include("~/Scripts/knockout-{version}.js"));
 
             bundles.Add(new ScriptBundle(AppScript.HomeRegister).Include(
+                "~/Scripts/json2.js",
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/ErrorCodes.js",
-                "~/Scripts/AppCreate.js"));
-
-            bundles.Add(new ScriptBundle(AppScript.HomeRegister).Include(
-                "~/Scripts/jquery-{version}.js",
-                "~/Scripts/knockout-{version}.js",
-                "~/Scripts/ErrorCodes.js",
-                "~/Scripts/App.js",
                 "~/Scripts/AppCreate.js"));
 
             bundles.Add(new ScriptBundle(AppScript.HomeView).Include(
+                "~/Scripts/json2.js",
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/ErrorCodes.js",
