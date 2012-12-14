@@ -21,6 +21,7 @@ namespace ErrorGun.Web.App_Start
                 "~/Scripts/json2.js",
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/knockout-{version}.js",
+                "~/Scripts/moment.js",
                 "~/Scripts/ErrorCodes.js",
                 "~/Scripts/App.js",
                 "~/Scripts/AppView.js"));

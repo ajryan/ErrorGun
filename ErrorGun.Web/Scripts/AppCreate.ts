@@ -1,5 +1,5 @@
-/// <reference path="knockout-2.2.d.ts" />
-/// <reference path="jquery-1.8.d.ts" />
+/// <reference path="defs\knockout-2.2.d.ts" />
+/// <reference path="defs\jquery-1.8.d.ts" />
 /// <reference path="ErrorCodes.ts" />
 /// <reference path="App.ts" />
 "use strict";

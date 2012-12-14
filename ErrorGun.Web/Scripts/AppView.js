@@ -37,7 +37,7 @@ var ErrorGun;
                         _this._loadedApiKey = ajaxData.ApiKey;
                         _this.Id(ajaxData.Id);
                         _this.Name(ajaxData.Name);
-                        _this.CreatedTimestampUtc(ajaxData.CreatedTimestampUtc);
+                        _this.CreatedTimestampUtc(moment(ajaxData.CreatedTimestampUtc).format('YYYY MMM DD hh:mm A'));
                         _this.ContactEmails(ajaxData.ContactEmails);
                         _this.ErrorMessage("");
                         _this.AppLoaded(true);

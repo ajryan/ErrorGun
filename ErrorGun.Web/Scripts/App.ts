@@ -1,4 +1,4 @@
-/// <reference path="knockout-2.2.d.ts" />
+/// <reference path="defs\knockout-2.2.d.ts" />
 
 module ErrorGun {
     export module ViewModels {

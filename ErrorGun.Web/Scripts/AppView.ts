@@ -1,5 +1,6 @@
-/// <reference path="knockout-2.2.d.ts" />
-/// <reference path="jquery-1.8.d.ts" />
+/// <reference path="defs\knockout-2.2.d.ts" />
+/// <reference path="defs\jquery-1.8.d.ts" />
+/// <reference path="defs\moment-1.7.d.ts" />
 /// <reference path="ErrorCodes.ts" />
 /// <reference path="App.ts" />
 
@@ -53,7 +54,7 @@ module ErrorGun {
                         this._loadedApiKey = ajaxData.ApiKey;
                         this.Id(ajaxData.Id);
                         this.Name(ajaxData.Name);
-                        this.CreatedTimestampUtc(ajaxData.CreatedTimestampUtc);
+                        this.CreatedTimestampUtc( moment(ajaxData.CreatedTimestampUtc).format('YYYY MMM DD hh:mm A') );
                         this.ContactEmails(ajaxData.ContactEmails);
 
                         this.ErrorMessage("");
