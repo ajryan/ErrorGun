@@ -12,7 +12,7 @@ var ErrorGun;
             "App_DuplicateContactEmails": "A duplicate contact email was provided.",
             "ErrorReport_MissingErrorReport": "No error report was submitted.",
             "ErrorReport_MissingAppId": "AppId is required.",
-            "ErrorReport_AppDoesNotExist": "An App with the provided AppId does not exist.",
+            "ErrorReport_AppDoesNotExist": "An App with the provided API Key does not exist.",
             "ErrorReport_InvalidApiKey": "The ApiKey is invalid.",
             "ErrorReport_MissingMessage": "ErrorMessage is required.",
             "ErrorReport_InvalidUserEmail": "UserEmail format is invalid.",
