@@ -33,6 +33,7 @@
 /* == MASTER == */
 
 body {
+    background-color: #37332D;
     background-image: url('/Content/Images/body_bg.png');
     background-repeat: repeat;
 }
