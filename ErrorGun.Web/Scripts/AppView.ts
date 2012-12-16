@@ -21,12 +21,14 @@ module ErrorGun {
             public Category = ko.observable("");
             public Source = ko.observable("");
             public UserEmail = ko.observable("");
+            public ErrorReports = ko.observableArray([]);
 
             // fields
             private _loadedApiKey: string;
 
             // methods
             public LoadApp: () => void;
+            public LoadErrors: () => void;
             public SendTestErrorReport: () => void;
             public ClearErrorReport: () => void;
 
@@ -60,6 +62,25 @@ module ErrorGun {
 
                         this.ErrorMessage("");
                         this.AppLoaded(true);
+                    });
+                };
+
+                this.LoadErrors = () => {
+                    if (this.AppLoaded() !== true)
+                        return;
+
+                    $.getJSON(
+                        '/api/errors',
+                        { 
+                            apiKey: this.ApiKey(),
+                        }
+                    )
+                    .fail((jqXHR: JQueryXHR) => {
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        this.ErrorMessage(errorMessage);
+                    })
+                    .done((ajaxData) => {
+                        this.ErrorReports(ajaxData);
                     });
                 };
 

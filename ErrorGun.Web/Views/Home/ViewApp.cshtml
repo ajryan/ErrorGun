@@ -15,7 +15,19 @@
                 <li><strong>API Key: </strong><span data-bind="text: ApiKey"></span></li>
                 <li><strong>Created: </strong><span data-bind="text: CreatedTimestampUtc"></span></li>
                 <li><strong>Contact Emails: </strong><span data-bind="text: ContactEmailsFlat()"></span></li>
+                <li><strong>Error Reports:</strong> <button name="LoadErrors" class="small" data-bind="click: LoadErrors">Load</button></li>
             </ul>
+            <div data-bind="visible: ErrorReports().length > 0, foreach: ErrorReports" class="clearfix" style="display: none">
+                <div class="four columns card">
+                    ID: <span data-bind="text: Id"></span><br/>
+                    Reported: <span data-bind="text: ReportedTimestampUtc"></span><br/>
+                    Message: <span data-bind="text: Message"></span><br/>
+                    Detail: <span data-bind="text: Detail"></span><br/>
+                    Category: <span data-bind="text: Category"></span><br/>
+                    Source: <span data-bind="text: Source"></span><br/>
+                    User Email: <span data-bind="text: UserEmail"></span><br/>
+                </div>
+            </div>
         </div>
         <div class="boxed" data-bind="visible: AppLoaded">
             <h4>Send Test Error Report</h4>

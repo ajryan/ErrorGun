@@ -21,6 +21,7 @@ var ErrorGun;
                 this.Category = ko.observable("");
                 this.Source = ko.observable("");
                 this.UserEmail = ko.observable("");
+                this.ErrorReports = ko.observableArray([]);
                 this.ContactEmailsFlat = ko.computed(function () {
                     return _this.ContactEmails().join(", ");
                 });
@@ -42,6 +43,19 @@ var ErrorGun;
                         _this.ContactEmails(ajaxData.ContactEmails);
                         _this.ErrorMessage("");
                         _this.AppLoaded(true);
+                    });
+                };
+                this.LoadErrors = function () {
+                    if(_this.AppLoaded() !== true) {
+                        return;
+                    }
+                    $.getJSON('/api/errors', {
+                        apiKey: _this.ApiKey()
+                    }).fail(function (jqXHR) {
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        _this.ErrorMessage(errorMessage);
+                    }).done(function (ajaxData) {
+                        _this.ErrorReports(ajaxData);
                     });
                 };
                 this.SendTestErrorReport = function () {

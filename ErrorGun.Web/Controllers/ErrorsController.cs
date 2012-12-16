@@ -28,9 +28,17 @@ namespace ErrorGun.Web.Controllers
 
             var response = Request.CreateResponse(HttpStatusCode.Created, savedError);
 
-            string link = Url.Link(RouteNames.DefaultApi, new { controller = "errors", id = 1 });
+            string link = Url.Link(RouteNames.DefaultApi, new {controller = "errors", id = 1});
             response.Headers.Location = new Uri(link);
 
+            return response;
+        }
+
+        public HttpResponseMessage Get(string apiKey)
+        {
+            var errors = _errorService.GetErrorReports(apiKey, 0, 10);
+
+            var response = Request.CreateResponse(HttpStatusCode.OK, errors);
             return response;
         }
     }

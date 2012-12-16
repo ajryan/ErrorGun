@@ -67,6 +67,36 @@ namespace ErrorGun.Web.Services
             }
         }
 
+        public ErrorReport[] GetErrorReports(string apiKey, int pageOffset, int pageSize)
+        {
+            // TODO: enforce max page size
+
+            if (apiKey == null)
+                throw new ServiceValidationException(ErrorCode.ErrorReport_InvalidApiKey);
+
+            using (var session = _documentStore.OpenSession())
+            {
+                var appId = session
+                    .Query<App>()
+                    .Where(a => a.ApiKey == apiKey)
+                    .Select(a => a.Id)
+                    .SingleOrDefault();
+
+                if (appId == null)
+                    throw new ServiceValidationException(ErrorCode.ErrorReport_InvalidApiKey);
+
+                // TODO index error report by app id
+                var errors = session
+                    .Query<ErrorReport>()
+                    .Where(er => er.AppId == appId)
+                    .Skip(pageOffset * pageSize)
+                    .Take(pageSize)
+                    .ToArray();
+
+                return errors;
+            }
+        }
+
         private static void ThrowOnInvalidErrorReport(ErrorReport errorReport, string apiKey, App app)
         {
             var errorCodes = new List<ErrorCode>();
