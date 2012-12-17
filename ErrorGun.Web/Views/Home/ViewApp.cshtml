@@ -18,15 +18,16 @@
                 <li><strong>Error Reports:</strong> <button name="LoadErrors" class="small" data-bind="click: LoadErrors">Load</button></li>
             </ul>
             <div data-bind="visible: ErrorReports().length > 0, foreach: ErrorReports" class="clearfix" style="display: none">
-                <div class="four columns card">
-                    ID: <span data-bind="text: Id"></span><br/>
+                <div class="six columns card" data-bind="attr: {title: Detail}">
+                    <h5 data-bind="text: Id"></h5>
                     Reported: <span data-bind="text: ReportedTimestampUtc"></span><br/>
                     Message: <span data-bind="text: Message"></span><br/>
-                    Detail: <span data-bind="text: Detail"></span><br/>
                     Category: <span data-bind="text: Category"></span><br/>
                     Source: <span data-bind="text: Source"></span><br/>
                     User Email: <span data-bind="text: UserEmail"></span><br/>
+                    Detail: <span data-bind="text: Detail"></span>
                 </div>
+                <br data-bind="css: {clear: $index() % 2 === 1}, visible: $index() % 2 === 1"/>
             </div>
         </div>
         <div class="boxed" data-bind="visible: AppLoaded">

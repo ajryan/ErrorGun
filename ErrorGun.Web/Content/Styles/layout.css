@@ -30,6 +30,17 @@
 /* #Site Styles
 ================================================== */
 
+/* == RESOURCE == */
+
+/* http://www.colourlovers.com/palette/953498/Headache */
+.pallette {
+  color: #655643;
+  color: #80BCA3;
+  color: #F6F7BD;
+  color: #E6AC27;
+  color: #BF4D28;
+}
+
 /* == MASTER == */
 
 body {
@@ -105,9 +116,9 @@ body {
 
 .alert {
     display: block;
-    -moz-border-radius: 4px;
+    /*-moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-    border-radius: 4px;
+    border-radius: 4px;*/
     padding: 8px 8px 8px 20px;
     margin: 0 20px 20px auto;
 }
@@ -187,9 +198,9 @@ div.boxed
   padding: 2px 6px 2px 6px;
   border: #cdcd4d 1px solid;
   margin: auto 20px 20px auto;
-  -moz-border-radius: 4px;
+  /*-moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  border-radius: 4px;
+  border-radius: 4px;*/
   -moz-box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
   -webkit-box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
   box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
@@ -213,14 +224,17 @@ div.boxed ul li
     margin: 0;
   }
 
-div.card {
-  background: #c5c538;
+div.card
+{
   padding: 2px 6px 2px 6px;
   margin: auto 20px 20px auto;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
+  max-height: 300px;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
+
 /* == TABLES == */
 
 table {
@@ -256,9 +270,9 @@ table.condensed th, table.condensed td {
     background: #f0f0c2;
     border-collapse: separate;
     border: solid 1px #cdcd4d;
-    -webkit-border-radius: 2px;
+    /*-webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    border-radius: 2px;
+    border-radius: 2px;*/
     -moz-box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
     -webkit-box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
     box-shadow: 0 0 5px rgba(101, 86, 67, 0.2);
