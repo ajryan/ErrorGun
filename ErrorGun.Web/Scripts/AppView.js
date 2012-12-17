@@ -55,6 +55,9 @@ var ErrorGun;
                         var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
                         _this.ErrorMessage(errorMessage);
                     }).done(function (ajaxData) {
+                        $.each(ajaxData, function (i, item) {
+                            item.ReportedTimestampUtc = moment(item.ReportedTimestampUtc).format('YYYY MMM DD hh:mm A');
+                        });
                         _this.ErrorReports(ajaxData);
                     });
                 };

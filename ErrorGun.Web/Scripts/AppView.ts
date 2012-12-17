@@ -80,6 +80,10 @@ module ErrorGun {
                         this.ErrorMessage(errorMessage);
                     })
                     .done((ajaxData) => {
+                        // pretty-format dates
+                        $.each(ajaxData, (i, item) => {
+                            item.ReportedTimestampUtc = moment(item.ReportedTimestampUtc).format('YYYY MMM DD hh:mm A');
+                        });
                         this.ErrorReports(ajaxData);
                     });
                 };
