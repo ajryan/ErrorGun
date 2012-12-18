@@ -228,11 +228,19 @@ div.card
 {
   padding: 2px 6px 2px 6px;
   margin: auto 20px 20px auto;
-  max-height: 300px;
-  overflow: hidden;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+}
+
+span.card-detail {
+  display: block;
+  max-height: 150px;
+  overflow: hidden;
+}
+
+span.card-value {
+  font-weight: bold;
 }
 
 /* == TABLES == */

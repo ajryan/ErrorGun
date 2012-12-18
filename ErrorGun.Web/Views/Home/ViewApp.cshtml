@@ -17,17 +17,24 @@
                 <li><strong>Contact Emails: </strong><span data-bind="text: ContactEmailsFlat()"></span></li>
                 <li><strong>Error Reports:</strong> <button name="LoadErrors" class="small" data-bind="click: LoadErrors">Load</button></li>
             </ul>
-            <div data-bind="visible: ErrorReports().length > 0, foreach: ErrorReports" class="clearfix" style="display: none">
-                <div class="six columns card" data-bind="attr: {title: Detail}">
-                    <h5 data-bind="text: Id"></h5>
-                    Reported: <span data-bind="text: ReportedTimestampUtc"></span><br/>
-                    Message: <span data-bind="text: Message"></span><br/>
-                    Category: <span data-bind="text: Category"></span><br/>
-                    Source: <span data-bind="text: Source"></span><br/>
-                    User Email: <span data-bind="text: UserEmail"></span><br/>
-                    Detail: <span data-bind="text: Detail"></span>
-                </div>
-                <br data-bind="css: {clear: $index() % 2 === 1}, visible: $index() % 2 === 1"/>
+            <div data-bind="visible: ErrorReports().length > 0, template: { name: 'errorreport', foreach: ErrorReports }" class="clearfix" style="display: none">
+                <script type="text/html" id="errorreport">
+                    <div class="six columns card">
+                        <h5 data-bind="text: Id"></h5>
+                        Reported: <span data-bind="text: ReportedTimestampUtc" class="card-value"></span><br/>
+                        Message: <span data-bind="text: Message" class="card-value"></span><br/>
+                        Category: <span data-bind="text: Category" class="card-value"></span><br/>
+                        Source: <span data-bind="text: Source" class="card-value"></span><br/>
+                        User Email: <span data-bind="text: UserEmail" class="card-value"></span><br/>
+                        Detail:<span data-bind="text: Detail" class="card-detail"></span>
+                    </div>
+                    <br data-bind="css: {clear: $index() % 2 === 1}, visible: $index() % 2 === 1"/>
+                </script>
+            </div>
+            <div data-bind="visible: ErrorReportPageCount() > 0">
+                <button class="small" data-bind="click: PrevErrorReportPage, enable: ErrorReportPage() > 1"><i class="icon-backward"></i> Prev</button>
+                Page <span data-bind="text: ErrorReportPage"></span> of <span data-bind="text: ErrorReportPageCount"></span>
+                <button class="small" data-bind="click: NextErrorReportPage, enable: ErrorReportPage() < ErrorReportPageCount()"><i class="icon-forward"></i> Next</button>
             </div>
         </div>
         <div class="boxed" data-bind="visible: AppLoaded">
@@ -71,11 +78,36 @@
         var viewModel = new ErrorGun.ViewModels.AppView();
         ko.applyBindings(viewModel);
 
-        $(function () {
+        $(function() {
             $('#load')
-                .ajaxStart(function () { viewModel.Working(true); })
-                .ajaxStop(function () { viewModel.Working(false); });
-            
+                .ajaxStart(function() { viewModel.Working(true); })
+                .ajaxStop(function() { viewModel.Working(false); });
+
+            // subscribe to ErrorReports changing so we can display
+            // overflow toggles
+            viewModel.ErrorReports.subscribe(function(newValue) {
+                $('span.card-detail').each(function(index, value) {
+                    var isOverflowing = value.clientHeight < value.scrollHeight;
+                    if (isOverflowing) {
+                        var parent = $(value).parent().get(0);
+                        $(parent).append("<button class='overflow-toggle small'><i class='icon-chevron-down'></i> &#8230;</button>");
+                    }
+                });
+            });
+
+            $(document).on('click', 'button.overflow-toggle', function () {
+                var $this = $(this);
+                var $detailSpan = $this.prev();
+                var $icon = $this.children(':first');
+                var currMaxHeight = $detailSpan.css('max-height');
+                
+                var newMaxHeight = currMaxHeight == 'none' ? '150px' : 'none';
+                $detailSpan.css('max-height', newMaxHeight);
+
+                var newIconClass = currMaxHeight == 'none' ? 'icon-chevron-down' : 'icon-chevron-up';
+                $icon.removeClass('icon-chevron-up icon-chevron-down').addClass(newIconClass);
+            });
+
             $('#apiKey').focus();
         });
     </script>

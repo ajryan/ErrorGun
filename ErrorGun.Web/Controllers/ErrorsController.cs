@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -34,12 +35,10 @@ namespace ErrorGun.Web.Controllers
             return response;
         }
 
-        public HttpResponseMessage Get(string apiKey)
+        public ErrorReports Get(string apiKey, int pageIndex = 0, int pageSize = 5)
         {
-            var errors = _errorService.GetErrorReports(apiKey, 0, 10);
-
-            var response = Request.CreateResponse(HttpStatusCode.OK, errors);
-            return response;
+            var errorReports = _errorService.GetErrorReports(apiKey, pageIndex, pageSize);
+            return errorReports;
         }
     }
 }

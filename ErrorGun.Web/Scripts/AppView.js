@@ -21,6 +21,8 @@ var ErrorGun;
                 this.Category = ko.observable("");
                 this.Source = ko.observable("");
                 this.UserEmail = ko.observable("");
+                this.ErrorReportPage = ko.observable(1);
+                this.ErrorReportPageCount = ko.observable(0);
                 this.ErrorReports = ko.observableArray([]);
                 this.ContactEmailsFlat = ko.computed(function () {
                     return _this.ContactEmails().join(", ");
@@ -29,6 +31,7 @@ var ErrorGun;
                     if(_this._loadedApiKey === _this.ApiKey()) {
                         return;
                     }
+                    _this._loadedApiKey = "";
                     _this.AppLoaded(false);
                     $.getJSON('/api/apps', {
                         apiKey: _this.ApiKey()
@@ -50,15 +53,18 @@ var ErrorGun;
                         return;
                     }
                     $.getJSON('/api/errors', {
-                        apiKey: _this.ApiKey()
+                        apiKey: _this.ApiKey(),
+                        pageIndex: _this.ErrorReportPage() - 1,
+                        pageSize: 4
                     }).fail(function (jqXHR) {
                         var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
                         _this.ErrorMessage(errorMessage);
                     }).done(function (ajaxData) {
-                        $.each(ajaxData, function (i, item) {
+                        _this.ErrorReportPageCount(ajaxData.PageCount);
+                        $.each(ajaxData.Items, function (i, item) {
                             item.ReportedTimestampUtc = moment(item.ReportedTimestampUtc).format('YYYY MMM DD hh:mm A');
                         });
-                        _this.ErrorReports(ajaxData);
+                        _this.ErrorReports(ajaxData.Items);
                     });
                 };
                 this.SendTestErrorReport = function () {
@@ -95,6 +101,16 @@ var ErrorGun;
                     _this.Category("");
                     _this.Source("");
                     _this.UserEmail("");
+                };
+                this.PrevErrorReportPage = function () {
+                    var pageNumber = Math.max(1, _this.ErrorReportPage() - 1);
+                    _this.ErrorReportPage(pageNumber);
+                    _this.LoadErrors();
+                };
+                this.NextErrorReportPage = function () {
+                    var pageNumber = Math.min(_this.ErrorReportPageCount(), _this.ErrorReportPage() + 1);
+                    _this.ErrorReportPage(pageNumber);
+                    _this.LoadErrors();
                 };
             }
             return AppView;

@@ -21,6 +21,8 @@ module ErrorGun {
             public Category = ko.observable("");
             public Source = ko.observable("");
             public UserEmail = ko.observable("");
+            public ErrorReportPage = ko.observable(1);
+            public ErrorReportPageCount = ko.observable(0);
             public ErrorReports = ko.observableArray([]);
 
             // fields
@@ -31,6 +33,8 @@ module ErrorGun {
             public LoadErrors: () => void;
             public SendTestErrorReport: () => void;
             public ClearErrorReport: () => void;
+            public PrevErrorReportPage: () => void;
+            public NextErrorReportPage: () => void;
 
             constructor() {
                 super();
@@ -43,6 +47,7 @@ module ErrorGun {
                     if (this._loadedApiKey === this.ApiKey())
                         return;
 
+                    this._loadedApiKey = "";
                     this.AppLoaded(false);
 
                     $.getJSON(
@@ -73,6 +78,8 @@ module ErrorGun {
                         '/api/errors',
                         { 
                             apiKey: this.ApiKey(),
+                            pageIndex: this.ErrorReportPage() - 1,
+                            pageSize: 4
                         }
                     )
                     .fail((jqXHR: JQueryXHR) => {
@@ -80,11 +87,14 @@ module ErrorGun {
                         this.ErrorMessage(errorMessage);
                     })
                     .done((ajaxData) => {
+                        this.ErrorReportPageCount(ajaxData.PageCount);
+
                         // pretty-format dates
-                        $.each(ajaxData, (i, item) => {
+                        $.each(ajaxData.Items, (i, item) => {
                             item.ReportedTimestampUtc = moment(item.ReportedTimestampUtc).format('YYYY MMM DD hh:mm A');
                         });
-                        this.ErrorReports(ajaxData);
+
+                        this.ErrorReports(ajaxData.Items);
                     });
                 };
 
@@ -126,6 +136,20 @@ module ErrorGun {
                     this.Category("");
                     this.Source("");
                     this.UserEmail("");
+                }
+
+                this.PrevErrorReportPage = () => {
+                    var pageNumber = Math.max(1, this.ErrorReportPage() - 1);
+                    this.ErrorReportPage(pageNumber);
+
+                    this.LoadErrors();
+                }
+
+                this.NextErrorReportPage = () => {
+                    var pageNumber = Math.min(this.ErrorReportPageCount(), this.ErrorReportPage() + 1);
+                    this.ErrorReportPage(pageNumber);
+
+                    this.LoadErrors();
                 }
             }
         }

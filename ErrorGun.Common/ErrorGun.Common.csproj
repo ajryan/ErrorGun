@@ -48,6 +48,7 @@
     <Compile Include="ContactEmail.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="ErrorReport.cs" />
+    <Compile Include="ErrorReports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

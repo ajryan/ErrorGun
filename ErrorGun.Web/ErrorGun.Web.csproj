@@ -217,6 +217,7 @@
     <Compile Include="Filters\ForwardAwareRequireHttpsAttribute.cs" />
     <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Raven\AppsByApiKey.cs" />
+    <Compile Include="Raven\ErrorReportsByAppId.cs" />
     <Compile Include="Raven\DocumentStoreExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

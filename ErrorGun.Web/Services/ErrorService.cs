@@ -67,9 +67,15 @@ namespace ErrorGun.Web.Services
             }
         }
 
-        public ErrorReport[] GetErrorReports(string apiKey, int pageOffset, int pageSize)
+        private const int MAX_PAGE_SIZE = 50;
+
+        public ErrorReports GetErrorReports(string apiKey, int pageOffset, int pageSize)
         {
-            // TODO: enforce max page size
+            if (pageSize > MAX_PAGE_SIZE)
+                throw new ServiceValidationException(ErrorCode.ErrorReport_PageSizeTooLarge);
+
+            if (pageOffset < 0)
+                throw new ServiceValidationException(ErrorCode.ErrorReport_PageOffsetInvalid);
 
             if (apiKey == null)
                 throw new ServiceValidationException(ErrorCode.ErrorReport_InvalidApiKey);
@@ -85,15 +91,27 @@ namespace ErrorGun.Web.Services
                 if (appId == null)
                     throw new ServiceValidationException(ErrorCode.ErrorReport_InvalidApiKey);
 
-                // TODO index error report by app id
+                RavenQueryStatistics stats;
+
                 var errors = session
                     .Query<ErrorReport>()
+                    .Statistics(out stats)
                     .Where(er => er.AppId == appId)
                     .Skip(pageOffset * pageSize)
                     .Take(pageSize)
+                    .OrderByDescending(er => er.ReportedTimestampUtc)
                     .ToArray();
 
-                return errors;
+                int pageCount = stats.TotalResults / pageSize;
+                if (stats.TotalResults % pageSize > 0)
+                    pageCount++;
+
+                return new ErrorReports
+                {
+                    PageSize = pageSize,
+                    PageCount = pageCount,
+                    Items = errors
+                };
             }
         }
 

@@ -10,6 +10,8 @@ var ErrorGun;
             "App_MissingContactEmail": "Please provide at least one contact email.",
             "App_InvalidEmailFormat": "A contact email was provided in an invalid format.",
             "App_DuplicateContactEmails": "A duplicate contact email was provided.",
+            "ErrorReport_PageSizeTooLarge": "The selected page size was too large.",
+            "ErrorReport_PageOffsetInvalid": "The selected page offset is invalid.",
             "ErrorReport_MissingErrorReport": "No error report was submitted.",
             "ErrorReport_MissingAppId": "AppId is required.",
             "ErrorReport_AppDoesNotExist": "An App with the provided API Key does not exist.",
