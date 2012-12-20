@@ -19,6 +19,7 @@ namespace ErrorGun.Web.Controllers
         }
 
         // POST api/apps
+        [WebApiThrottle(Name = "AppsPost", Milliseconds = 30000)]
         public HttpResponseMessage Post(AppModel app)
         {
             var savedApp = _appService.CreateApp(app);
@@ -31,12 +32,21 @@ namespace ErrorGun.Web.Controllers
             return response;
         }
 
+        // GET api/apps
+        [WebApiThrottle(Name = "AppsGet", Milliseconds = 5000)]
         public HttpResponseMessage Get(string apiKey)
         {
-            // TODO: unit test this plus the service method itself
-
             var app = _appService.LoadApp(apiKey);
             var response = Request.CreateResponse(HttpStatusCode.OK, app);
+            return response;
+        }
+
+        // DELETE api/apps
+        [WebApiThrottle(Name = "AppsDelete", Milliseconds = 10000)]
+        public HttpResponseMessage Delete(string appId, string apiKey)
+        {
+            _appService.DeleteApp(appId, apiKey);
+            var response = Request.CreateResponse(HttpStatusCode.OK, appId + " has been deleted."); // TODO: correct REST response code?
             return response;
         }
     }

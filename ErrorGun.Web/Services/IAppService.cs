@@ -8,5 +8,6 @@ namespace ErrorGun.Web.Services
         AppModel CreateApp(AppModel model);
         ConfirmEmailModel ConfirmEmail(string confirmationCode);
         AppModel LoadApp(string apiKey);
+        void DeleteApp(string appId, string apiKey);
     }
 }

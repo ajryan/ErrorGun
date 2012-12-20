@@ -36,7 +36,7 @@ var ErrorGun;
                     $.getJSON('/api/apps', {
                         apiKey: _this.ApiKey()
                     }).fail(function (jqXHR) {
-                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR);
                         _this.ErrorMessage(errorMessage);
                     }).done(function (ajaxData) {
                         _this._loadedApiKey = ajaxData.ApiKey;
@@ -57,7 +57,7 @@ var ErrorGun;
                         pageIndex: _this.ErrorReportPage() - 1,
                         pageSize: 4
                     }).fail(function (jqXHR) {
-                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR);
                         _this.ErrorMessage(errorMessage);
                     }).done(function (ajaxData) {
                         _this.ErrorReportPageCount(ajaxData.PageCount);
@@ -88,7 +88,7 @@ var ErrorGun;
                         dataType: "json",
                         data: JSON.stringify(json)
                     }).fail(function (jqXHR) {
-                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR);
                         _this.ErrorMessageSend(errorMessage);
                     }).done(function (ajaxData) {
                         _this.ErrorMessageSend("");

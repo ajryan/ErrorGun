@@ -15,7 +15,7 @@
                 <li><strong>API Key: </strong><span data-bind="text: ApiKey"></span></li>
                 <li><strong>Created: </strong><span data-bind="text: CreatedTimestampUtc"></span></li>
                 <li><strong>Contact Emails: </strong><span data-bind="text: ContactEmailsFlat()"></span></li>
-                <li><strong>Error Reports:</strong> <button name="LoadErrors" class="small" data-bind="click: LoadErrors">Load</button></li>
+                <li><strong>Error Reports:</strong> <button name="LoadErrors" class="small" data-bind="click: LoadErrors, disable: Working">Load</button></li>
             </ul>
             <div data-bind="visible: ErrorReports().length > 0, template: { name: 'errorreport', foreach: ErrorReports }" class="clearfix" style="display: none">
                 <script type="text/html" id="errorreport">
@@ -32,9 +32,9 @@
                 </script>
             </div>
             <div data-bind="visible: ErrorReportPageCount() > 0">
-                <button class="small" data-bind="click: PrevErrorReportPage, enable: ErrorReportPage() > 1"><i class="icon-backward"></i> Prev</button>
+                <button class="small" data-bind="click: PrevErrorReportPage, enable: !Working() && ErrorReportPage() > 1"><i class="icon-backward"></i> Prev</button>
                 Page <span data-bind="text: ErrorReportPage"></span> of <span data-bind="text: ErrorReportPageCount"></span>
-                <button class="small" data-bind="click: NextErrorReportPage, enable: ErrorReportPage() < ErrorReportPageCount()"><i class="icon-forward"></i> Next</button>
+                <button class="small" data-bind="click: NextErrorReportPage, enable: !Working() && ErrorReportPage() < ErrorReportPageCount()"><i class="icon-forward"></i> Next</button>
             </div>
         </div>
         <div class="boxed" data-bind="visible: AppLoaded">

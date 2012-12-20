@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -21,6 +20,7 @@ namespace ErrorGun.Web.Controllers
 
         // TODO: move api key to header, and implement auth attribute
         // POST api/errors
+        [WebApiThrottle(Name = "ErrorsPost", Milliseconds = 1000)]
         public HttpResponseMessage Post(
             [FromBody] ErrorReport error,
             [FromUri] string apiKey)
@@ -35,6 +35,8 @@ namespace ErrorGun.Web.Controllers
             return response;
         }
 
+        // GET api/errors
+        [WebApiThrottle(Name = "ErrorsGet", Milliseconds = 1000)]
         public ErrorReports Get(string apiKey, int pageIndex = 0, int pageSize = 5)
         {
             var errorReports = _errorService.GetErrorReports(apiKey, pageIndex, pageSize);

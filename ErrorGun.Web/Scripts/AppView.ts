@@ -55,7 +55,7 @@ module ErrorGun {
                         { apiKey: this.ApiKey() }
                     )
                     .fail((jqXHR: JQueryXHR) => {
-                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR);
                         this.ErrorMessage(errorMessage);
                     })
                     .done((ajaxData) => {
@@ -83,7 +83,7 @@ module ErrorGun {
                         }
                     )
                     .fail((jqXHR: JQueryXHR) => {
-                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR);
                         this.ErrorMessage(errorMessage);
                     })
                     .done((ajaxData) => {
@@ -121,7 +121,7 @@ module ErrorGun {
                         data: JSON.stringify(json)
                     })
                     .fail((jqXHR: JQueryXHR) => {
-                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR);
                         this.ErrorMessageSend(errorMessage);
                     })
                     .done((ajaxData) => {

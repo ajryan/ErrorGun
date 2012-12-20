@@ -16,6 +16,7 @@ namespace ErrorGun.Web.Controllers
             _documentStore = documentStore;
         }
 
+        [MvcThrottle(Name = "AdminIndex", Milliseconds = 10000)]
         public ActionResult Index(string password, int appPage = 1)
         {
             return View(new AdminModel(password, appPage, _documentStore));

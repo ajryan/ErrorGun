@@ -45,8 +45,8 @@ module ErrorGun {
                         dataType: "json",
                         data: json
                     })
-                    .fail((jqXHR, textStatus) => {
-                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                    .fail((jqXHR: JQueryXHR, textStatus) => {
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR);
                         this.ErrorMessage(errorMessage);
                     })
                     .done((ajaxData) => {

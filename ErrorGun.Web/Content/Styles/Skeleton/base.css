@@ -351,6 +351,7 @@ input[type="button"] {
   input[type="button"]:disabled {
     border: 1px solid #666;
     background: #999;
+    cursor:default;
     color: #333;
     -webkit-text-shadow: none;
     text-shadow: none;

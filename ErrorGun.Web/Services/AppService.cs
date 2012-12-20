@@ -123,6 +123,26 @@ namespace ErrorGun.Web.Services
             }
         }
 
+        public void DeleteApp(string appId, string apiKey)
+        {
+            if (String.IsNullOrWhiteSpace(appId))
+                throw new ServiceValidationException(ErrorCode.App_MissingAppId);
+
+            if (String.IsNullOrWhiteSpace(apiKey))
+                throw new ServiceValidationException(ErrorCode.App_MissingApiKey);
+
+            using (var session = _documentStore.OpenSession())
+            {
+                var app = session.Load<App>(appId);
+                if (app == null || app.ApiKey != apiKey)
+                    throw new ServiceValidationException(ErrorCode.App_AppDoesNotExist);
+
+                session.Delete(app);
+                session.SaveChanges();
+            }
+        }
+
+
         private static void ThrowOnInvalidAppModel(AppModel appModel)
         {
             var errorCodes = new List<ErrorCode>();

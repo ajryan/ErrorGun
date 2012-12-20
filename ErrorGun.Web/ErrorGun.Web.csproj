@@ -215,6 +215,9 @@
     <Compile Include="Controllers\FailController.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Filters\ForwardAwareRequireHttpsAttribute.cs" />
+    <Compile Include="Filters\MvcThrottleAttribute.cs" />
+    <Compile Include="Filters\WebApiThrottleAttribute.cs" />
+    <Compile Include="Filters\ThrottleHelper.cs" />
     <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Raven\AppsByApiKey.cs" />
     <Compile Include="Raven\ErrorReportsByAppId.cs" />

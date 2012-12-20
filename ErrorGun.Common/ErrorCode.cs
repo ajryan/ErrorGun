@@ -14,6 +14,7 @@ namespace ErrorGun.Common
         App_MissingContactEmail,
         App_InvalidEmailFormat,
         App_DuplicateContactEmails,
+        App_MissingAppId,
 
         ErrorReport_PageSizeTooLarge,
         ErrorReport_PageOffsetInvalid,

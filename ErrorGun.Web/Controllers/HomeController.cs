@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using ErrorGun.Web.Filters;
 using ErrorGun.Web.Models;
 using ErrorGun.Web.Services;
 
@@ -33,6 +34,7 @@ namespace ErrorGun.Web.Controllers
             return View();
         }
 
+        [MvcThrottle(Name = "HomeConfirmEmail", Milliseconds = 5000)]
         public ActionResult ConfirmEmail(string confirmationCode)
         {
             try

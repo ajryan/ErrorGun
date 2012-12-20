@@ -33,7 +33,7 @@ var ErrorGun;
                         dataType: "json",
                         data: json
                     }).fail(function (jqXHR, textStatus) {
-                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR.responseText);
+                        var errorMessage = ErrorGun.ErrorCodes.GetErrorMessages(jqXHR);
                         _this.ErrorMessage(errorMessage);
                     }).done(function (ajaxData) {
                         _this.ErrorMessage("");
