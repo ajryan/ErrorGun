@@ -36,13 +36,14 @@ namespace ErrorGun.Web.Services
                     "Please click the following link to confirm your email address: {0}?confirmationCode={1}",
                     ConfigurationManager.AppSettings["EmailConfirmationUrl"], contactEmail.ConfirmationCode);
 
-                SendEmail(from, contactEmail.EmailAddress, confirmationSubject, body);
+                SendEmail(from, null, contactEmail.EmailAddress, confirmationSubject, body);
             }
         }
 
         public void SendErrorReports(App app, ErrorReport errorReport, IEnumerable<string> emailAddresses)
         {
             string from = app.Name.Replace(' ', '_') + "-" + app.Id.Replace("/", String.Empty) + "@" + _MailgunDomain;
+            string replyTo = errorReport.UserEmail;
             string subject = "ErrorGun Error Report for " + app.Name;
             string body = String.Format(
                 "Id: {0}, Category: {1}, Source: {2}, Reported At: {3} UTC, User Email: {4}\r\nMessage: {5}\r\nDetail: {6}",
@@ -56,20 +57,22 @@ namespace ErrorGun.Web.Services
 
             foreach (var emailAddress in emailAddresses)
             {
-                SendEmail(from, emailAddress, subject, body);
+                SendEmail(from, replyTo, emailAddress, subject, body);
             }
         }
 
-        private void SendEmail(string from, string toEmailAddress, string subject, string body)
+        private void SendEmail(string fromEmailAddress, string replyToEmailAddress, string toEmailAddress, string subject, string body)
         {
+            var mailMessage = new MailMessage(fromEmailAddress, toEmailAddress, subject, body);
+            if (!String.IsNullOrWhiteSpace(replyToEmailAddress))
+                mailMessage.ReplyToList.Add(replyToEmailAddress);
+
             using (var smtpClient = new SmtpClient(_MailgunServer, _MailgunPort))
             {
                 smtpClient.EnableSsl = (_MailgunPort == 587);
                 smtpClient.UseDefaultCredentials = false;
                 smtpClient.Credentials = new NetworkCredential(_MailgunLogin, _MailgunPassword);
-
-                smtpClient.Send(
-                    new MailMessage(from, toEmailAddress, subject, body));
+                smtpClient.Send(mailMessage);
             }
         }
     }
